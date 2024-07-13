@@ -9,6 +9,6 @@ class CountOpportunity extends Component
     public function render()
     {
         return view('livewire.count-opportunity', [
-            'opportunities' => 15]);
+            'opportunities' => rand(1, 99),]);
     }
 }
