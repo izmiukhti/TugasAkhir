@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="simple-footer mt-5">
-          Copyright &copy; Stisla 2018
+          Copyright &copy; 2024 SchoolTech Indonesia
         </div>
       </div>
     </section>

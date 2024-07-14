@@ -7,7 +7,7 @@
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
-        <li class="active"><a class="nav-link" href="#"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a class="nav-link" href="{{route('dashboard')}}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
         <li class="menu-header">Master Data</li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users-cog"></i> <span>User</span></a>
@@ -17,5 +17,16 @@
             <li><a class="nav-link" href="{{route('comingsoon')}}">Permission Management</a></li>
           </ul>
         </li>
+        <li class="menu-header">Platform Management</li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-boxes"></i> <span>Opportunity</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-file-alt"></i> <span>Applicant</span></a></li>
+        <li class="menu-header">Selection</li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-file-signature"></i> <span>CV Screening</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-user-md"></i> <span>Psikotest</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-user-check"></i> <span>Interview HR</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-fire"></i> <span>Interview User</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-handshake"></i> <span>Offering</span></a></li>
+        <li class="menu-header">Reporting</li>
+        <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-fire"></i> <span>Recruitment Report</span></a></li>
       </ul>
   </aside>
