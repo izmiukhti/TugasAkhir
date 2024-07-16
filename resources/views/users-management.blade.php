@@ -12,6 +12,6 @@
 
 @section('content')
 <section class="section">
-    @livewire('user')
+    @livewire('users-menu')
 </section>
 @endsection
