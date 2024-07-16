@@ -18,7 +18,7 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
-    public $name, $email;
+    public $id, $name, $email;
 
     public function render()
     {
@@ -32,11 +32,35 @@ class UsersMenu extends Component
         $this->isShow = false;
     }
 
+    public function edit($id){
+        $this->isHome = false;
+        $this->isCreate = false;
+        $this->isEdit = true;
+        $this->isShow = false;
+        $user = User::find($id);
+        $this->id = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
+    }
+
+    public function show($id){
+        $this->isHome = false;
+        $this->isCreate = false;
+        $this->isEdit = false;
+        $this->isShow = true;
+        $user = User::find($id);
+        $this->id = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
+    }
+
     public function back(){
         $this->isHome = true;
         $this->isCreate = false;
         $this->isEdit = false;
         $this->isShow = false;
+
+        $this->reset('id', 'name', 'email');
     }
 
     public function save(){
@@ -51,6 +75,31 @@ class UsersMenu extends Component
             'password' => Hash::make('password')
         ]);
 
+        session()->flash('success', 'User created successfully.');
+        $this->reset('name', 'email');
+        $this->back();
+    }
+
+    public function setUpdate($id){
+        $this->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        $user = User::find($id);
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email
+        ]);
+
+        session()->flash('success', 'User updated successfully.');
+        $this->reset('name', 'email');
+        $this->back();
+    }
+
+    public function destroy($id){
+        User::find($id)->delete();
+        session()->flash('success', 'User deleted successfully.');
         $this->back();
     }
 }

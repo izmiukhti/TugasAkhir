@@ -22,10 +22,13 @@
                     </div>
                     <br>
                     @if (session()->has('success'))
-                        <br>
                         <div class="alert alert-success alert-dismissible show fade">
-                            Dor
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>×</span>
+                            </button>
+                            {{ session('success') }}
+                            </div>
                         </div>
                         <br>
                     @endif
@@ -46,9 +49,9 @@
                                 <td>{{$user->email}}</td>
                                 <td>
                                     <div class="buttons">
-                                        <a href="#" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
-                                        <a href="#" class="btn btn-icon btn-warning"><i class="fas fa-exclamation-triangle"></i></a>
-                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+                                        <a href="#" wire:click.prevent="show({{$user->id}})" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="#" wire:click.prevent="edit({{$user->id}})" class="btn btn-icon btn-warning"><i class="fas fa-exclamation-triangle"></i></a>
+                                        <a href="#" wire:click="destroy({{$user->id}})" wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>                    
@@ -62,29 +65,98 @@
     @endif
 
     @if($isCreate)
-    <div class="section-header">
-        <h1>Create User</h1>
-    </div>
+        <div class="section-header">
+            <h1>Create User</h1>
+        </div>
 
-    <div class="section-body">
-        <h2 class="section-title">Create User</h2>
-        <p class="section-lead">In this section you can create new user to access the system.</p>
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" wire:model="name">
-                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" wire:model="email">
-                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-                <button wire:click.prevent="back()" class="btn btn-info">Back</button>
-                <button wire:click.prevent="save()" class="submit btn btn-success">Save</button>
+        <div class="section-body">
+            <h2 class="section-title">Create User</h2>
+            <p class="section-lead">In this section you can create new user to access the system.</p>
+            <div class="card">
+                <form wire:submit.prevent="save">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" wire:model="email">
+                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                        
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+    @endif
+
+    @if ($isEdit)
+        <div class="section-header">
+            <h1>Update User</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Update User</h2>
+            <p class="section-lead">In this section you can update user data.</p>
+            <div class="card">
+                <form wire:submit.prevent="setUpdate({{$id}})">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" wire:model="email">
+                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+    @if ($isShow)
+        <div class="section-header">
+            <h1>Detail User</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Detail User</h2>
+            <p class="section-lead">In this section you can show details of the user.</p>
+            <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Name</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{$name}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Email</strong></p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{$email}}</p>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
     @endif
 </div>
