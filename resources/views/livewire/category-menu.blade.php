@@ -49,8 +49,8 @@
                                 <td>{{$category->description}}</td>
                                 <td>
                                     <div class="buttons">
-                                        <a href="#" class="btn btn-icon btn-warning"><i class="fas fa-exclamation-triangle"></i></a>
-                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+                                        <a href="#" wire:click.prevent="update({{$category->id}})" class="btn btn-icon btn-warning"><i class="fas fa-exclamation-triangle"></i></a>
+                                        <a href="#" wire:click.prevent="delete({{$category->id}})" wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>                    
@@ -72,6 +72,37 @@
             <p class="section-lead">In this section you can create new category to access the system.</p>
             <div class="card">
                 <form wire:submit.prevent="save">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
+                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+    @if ($isUpdate)
+        <div class="section-header">
+            <h1>Update Category</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Create Category</h2>
+            <p class="section-lead">In this section you can create new category to access the system.</p>
+            <div class="card">
+                <form wire:submit.prevent="setUpdate({{$id}})">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Name</label>

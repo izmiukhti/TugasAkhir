@@ -14,7 +14,8 @@ class CategoryMenu extends Component
     
     public $isHome = true;
     public $isCreate = false;
-    public $name, $description;
+    public $isUpdate = false;
+    public $id, $name, $description;
     public $search;
 
     public function render()
@@ -29,9 +30,20 @@ class CategoryMenu extends Component
         $this->isCreate = true;
     }
 
+    public function update($id){
+        $this->isHome = false;
+        $this->isUpdate = true;
+
+        $category = Category::find($id);
+        $this->id = $category->id;
+        $this->name = $category->name;
+        $this->description = $category->description;
+    }
+
     public function home(){
         $this->isHome = true;
         $this->isCreate = false;
+        $this->isUpdate = false;
 
         $this->reset('name', 'description');
     }
@@ -50,5 +62,26 @@ class CategoryMenu extends Component
         session()->flash('success', 'Category created successfully.');
         $this->reset('name', 'description');
         $this->home();
+    }
+
+    public function setUpdate($id){
+        $this->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        Category::find($id)->update([
+            'name' => $this->name,
+            'description' => $this->description
+        ]);
+
+        session()->flash('success', 'Category updated successfully.');
+        $this->reset('name', 'description');
+        $this->home();
+    }
+
+    public function delete($id){
+        Category::find($id)->delete();
+        session()->flash('success', 'Category deleted successfully.');
     }
 }
