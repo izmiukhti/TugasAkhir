@@ -14,7 +14,7 @@
                             
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="search" placeholder="Search Category">
+                            <input wire:model.live.debounce.250ms="search" type="text" class="form-control" id="search" placeholder="Search Category">
                         </div>
                         <div class="col-4 text-right">
                             <button wire:click.prevent="create()" class="btn btn-primary">Create</button>
@@ -57,7 +57,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{-- {{$users->links()}} --}}
+                    {{$categories->links()}}
                 </div>
             </div>
         </div>
