@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Category Management')
+@section('title', 'Division Management')
 
 @push('styles')
     @livewireStyles
@@ -12,6 +12,6 @@
 
 @section('content')
 <section class="section">
-    @livewire('category-menu')
+    @livewire('divisi-menu')
 </section>
 @endsection

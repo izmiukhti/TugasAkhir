@@ -18,6 +18,7 @@
           </ul>
         </li>
         <li class=""><a class="nav-link" href="{{route('categories')}}"><i class="fas fa-tag"></i> <span>Category</span></a></li>
+        <li class=""><a class="nav-link" href="{{route('divisions')}}"><i class="fas fa-sitemap"></i> <span>Division</span></a></li>
         <li class="menu-header">Platform Management</li>
         <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-boxes"></i> <span>Opportunity</span></a></li>
         <li class=""><a class="nav-link" href="{{route('comingsoon')}}"><i class="fas fa-file-alt"></i> <span>Applicant</span></a></li>

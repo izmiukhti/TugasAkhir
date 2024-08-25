@@ -22,6 +22,10 @@ Route::get('/categories', function () {
     return view('category-management');
 })->middleware(['auth', 'verified'])->name('categories');
 
+Route::get('/divisions', function () {
+    return view('divisi-management');
+})->middleware(['auth', 'verified'])->name('divisions');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
