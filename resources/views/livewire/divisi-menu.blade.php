@@ -14,7 +14,7 @@
                             
                         </div>
                         <div class="col-4">
-                            <input wire:model.live.debounce.250ms="search" type="text" class="form-control" id="search" placeholder="Search Category">
+                            <input wire:model.live.debounce.250ms="search" type="text" class="form-control" id="search" placeholder="Search Division">
                         </div>
                         <div class="col-4 text-right">
                             <button wire:click.prevent="create()" class="btn btn-primary">Create</button>
@@ -59,6 +59,68 @@
                     </table>
                     {{$divisions->links()}}
                 </div>
+            </div>
+        </div>
+    @endif
+    @if ($isCreate)
+        <div class="section-header">
+            <h1>Create Division</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Create Division</h2>
+            <p class="section-lead">In this section you can create division.</p>
+            <div class="card">
+                <form wire:submit.prevent="save">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
+                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+    @if($isUpdate)
+        <div class="section-header">
+            <h1>Update Division</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Update Division</h2>
+            <p class="section-lead">In this section you can update division.</p>
+            <div class="card">
+                <form wire:submit.prevent="saveUpdate({{$id}})">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
+                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                        
+                    </div>
+                </form>
             </div>
         </div>
     @endif

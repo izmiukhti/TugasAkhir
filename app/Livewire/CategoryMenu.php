@@ -50,7 +50,7 @@ class CategoryMenu extends Component
 
     public function save(){
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|unique:categories',
             'description' => 'required'
         ]);
 
