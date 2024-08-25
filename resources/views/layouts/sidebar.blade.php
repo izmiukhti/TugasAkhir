@@ -1,9 +1,11 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-      <a href="index.html">SchoolTech</a>
+      <img src="{{asset('assets/img/logo_horizontal.png')}}" alt="logo" height="60px" width="193px">
+      {{-- <a href="index.html">SchoolTech</a> --}}
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-      <a href="index.html">St</a>
+      <img src="{{asset('assets/img/logo_sharp.png')}}" alt="logo" height="40px" width="40px">
+      {{-- <a href="index.html">St</a> --}}
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
