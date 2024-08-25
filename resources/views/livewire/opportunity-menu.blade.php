@@ -51,9 +51,6 @@
                                         <th id="close-date">25 December 2024</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <!-- table body content -->
-                                </tbody>
                             </table>
                             <div class="row">
                                 <div class="col-6 text-center">
