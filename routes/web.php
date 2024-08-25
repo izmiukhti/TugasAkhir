@@ -26,6 +26,10 @@ Route::get('/divisions', function () {
     return view('divisi-management');
 })->middleware(['auth', 'verified'])->name('divisions');
 
+Route::get('/opportunities', function () {
+    return view('opportunity-management');
+})->middleware(['auth', 'verified'])->name('opportunities');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
