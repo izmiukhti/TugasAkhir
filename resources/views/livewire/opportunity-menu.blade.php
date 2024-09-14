@@ -83,11 +83,11 @@
                     <div class="row">
                         <div class="col-6">
                             <h3>{{$opportunity->name}}</h3>
-                            <p>{{$opportunity->location}}, {{$opportunity->schema}} | Created Date : {{$opportunity->created_at}} <br> Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
+                            <p>{{$opportunity->location}}, {{$opportunity->schema->name}} | Created Date : {{$opportunity->created_at}} <br> Division : {{$opportunity->division->name}} | Category : {{$opportunity->category->name}} <br>Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
                             <p></p>
-                            <div class="badges">
+                            {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-6">
                             <div class="row">
@@ -279,6 +279,22 @@
                             </div>
                         </div>
                         <div class="col-6">
+                            <p><strong>Division</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->division->name}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Category</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->category->name}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
                             <p><strong>Quota Opportunity</strong></p>
                         </div>
                         <div class="col-6">
@@ -299,7 +315,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{$opportunity->schema}}" disabled>
+                                <input type="text" class="form-control" value="{{$opportunity->schema->name}}" disabled>
                             </div>
                         </div>
                         <div class="col-6">

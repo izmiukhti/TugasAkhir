@@ -53,9 +53,7 @@ class OpportunityMenu extends Component
 
     public function detail($id){
         $opportunity = Opportunity::find($id);
-
         $this->opportunity = $opportunity;
-
         $this->isHome = false;
         $this->isDetail = true;
         $this->isCreate = false;
