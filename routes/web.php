@@ -3,9 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
+
 Route::get('/coming-soon', function () {
     return view('comingsoon');
 })->name('comingsoon');
