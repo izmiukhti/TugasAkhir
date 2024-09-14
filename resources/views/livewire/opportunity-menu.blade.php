@@ -34,52 +34,38 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($opportunities as $item)
                 <div class="col-4">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h4>Fullstack Developer - Internship</h4>
+                            <h4>{{$item->name}}</h4>
                         </div>
                         <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th id="open-registration">Open Registration</th>
-                                        <th id="open-date">20 December 2024</th>
-                                    </tr>
-                                    <tr>
-                                        <th id="close-registration">Close Registration</th>
-                                        <th id="close-date">25 December 2024</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <p>Range Application : {{$item->start_date}} - {{$item->end_date}}</p>
+                            <p>Created Date : {{$item->created_at}}</p>
                             <div class="row">
                                 <div class="col-6 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
-                                        <h4>1024</h4>
+                                        <h4>{{$item->clicked}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Applicant</strong></p>
-                                        <h4>185</h4>
+                                        <h4>0</h4>
                                     </div>
                                 </div>
                             </div>
-                            <p>Created Date : 14 Agustus 2024</p>
-                            <a href="#" wire:click.prevent="detail()" class="btn btn-block btn-icon icon-left btn-outline-info"><i class="fas fa-info-circle"></i> Detail</a>
+                            <a href="#" wire:click="detail('{{$item->id}}')" class="btn btn-block btn-icon icon-left btn-outline-info"><i class="fas fa-info-circle"></i> Detail</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card card-dark">
-                        <div class="card-header">
-                            <h4>IT Technical Writer - Internship</h4>
-                        </div>
-                            <div class="card-body">
-                            
-                            </div>
-                    </div>
+                @endforeach
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    {{$opportunities->links()}}
                 </div>
             </div>
         </div>
@@ -96,8 +82,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h3>Fullstack Developer - Internship</h3>
-                            <p>Kota Malang, WFH | Created Date : 20 Agustus 2024 <br> Open Date : 20 December 2024 | Close Date : 30 December 2024</p>
+                            <h3>{{$opportunity->name}}</h3>
+                            <p>{{$opportunity->location}}, {{$opportunity->schema}} | Created Date : {{$opportunity->created_at}} <br> Open Date : {{$opportunity->start_date}} | Close Date : {{$opportunity->end_date}}</p>
                             <p></p>
                             <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -108,22 +94,23 @@
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
-                                        <h4>1024</h4>
+                                        <h4>0</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Applicant</strong></p>
-                                        <h4>185</h4>
+                                        <h4>0</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Quota</strong></p>
-                                        <h4>10</h4>
+                                        <h4>{{$opportunity->quota}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
+                                    <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
                                     <a href="#" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
                                     <a href="#" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
                                     <a href="#" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
@@ -133,10 +120,77 @@
                     </div>
                 </div>
             </div>
+        </div>
+    @endif
+    @if ($isCreate)
+        <div class="section-header">
+            <h1>Create Opportunity</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Create Opportunity</h2>
+            <p class="section-lead">In this section you can create Opportunity.</p>
             <div class="card">
-                <div class="card-body">
-                    <a href="#" wire:click.prevent="home()" class="btn btn-icon icon-left btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
-                </div>
+                <form wire:submit.prevent="store">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" wire:model="name">
+                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea wire:model="description" style="height: 150px" class="form-control" id="description"></textarea>
+                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="job_description">Job Description</label>
+                            <textarea wire:model="job_description" style="height: 150px" class="form-control" id="job_description"></textarea>
+                            @error('job_description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="job_requirement">Job Requirement</label>
+                            <textarea wire:model="job_requirement" style="height: 150px" class="form-control" id="job_requirement"></textarea>
+                            @error('job_requirement') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="quotas">Quotas</label>
+                            <input type="number" class="form-control" id="quotas" wire:model="quotas">
+                            @error('quotas') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" class="form-control" id="location" wire:model="location">
+                            @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="schema">Schema</label>
+                            <input type="text" class="form-control" id="schema" wire:model="schema">
+                            @error('schema') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="open_date">Open Registration Date</label>
+                                    <input type="date" class="form-control" id="open_date" wire:model="open_date">
+                                    @error('open_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="close_date">Close Registration Date</label>
+                                    <input type="date" class="form-control" id="close_date" wire:model="close_date">
+                                    @error('close_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
+                            <button class="submit btn btn-success">Save</button>
+                        </div>
+                        
+                    </div>
+                </form>
             </div>
         </div>
     @endif
