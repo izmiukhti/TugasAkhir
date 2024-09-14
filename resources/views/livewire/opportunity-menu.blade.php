@@ -20,6 +20,7 @@
                             <button wire:click.prevent="create()" class="btn btn-primary">Create</button>
                         </div>
                     </div>
+                    <br>
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible show fade">
                             <div class="alert-body">
@@ -29,7 +30,6 @@
                             {{ session('success') }}
                             </div>
                         </div>
-                        <br>
                     @endif
                 </div>
             </div>
@@ -113,7 +113,7 @@
                                     <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
                                     <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
                                     <a href="#" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
-                                    <a href="#" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
