@@ -12,4 +12,12 @@ class PublicController extends Controller
         $opportunities = Opportunity::latest()->get();
         return view('welcome', compact('opportunities'));
     }
+
+    public function show($id)
+    {
+        $opportunity = Opportunity::find($id);
+        $opportunity->clicked = $opportunity->clicked + 1;
+        $opportunity->save();
+        return view('detailopportunity', compact('opportunity'));
+    }
 }

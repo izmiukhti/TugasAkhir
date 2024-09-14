@@ -94,7 +94,7 @@
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
-                                        <h4>0</h4>
+                                        <h4>{{$opportunity->clicked}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">

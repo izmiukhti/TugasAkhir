@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
+Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
 
 Route::get('/coming-soon', function () {
     return view('comingsoon');

@@ -230,7 +230,7 @@
                                 <div class="project-img">
                                     <img src="img/project-{{$loop->index + 1 % 6}}.jpg" class="img-fluid w-100 rounded" alt="">
                                     <div class="project-content">
-                                        <a href="#" class="text-center">
+                                        <a href="/opportunities/{{$item->id}}" class="text-center">
                                             <h4 class="text-secondary">{{$item->division->name}}</h4>
                                             <p class="m-0 text-white">{{$item->name}}</p>
                                             <p class="m-0 text-white">{{$item->category->name}}</p>
