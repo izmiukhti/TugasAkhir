@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'administrator@schooltech.biz.id',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
+            'phone_number' => '081234567890',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             DivisionSeeder::class,
+            SchemaSeeder::class,
             // PostSeeder::class,
             // UserSeeder::class,
         ]);

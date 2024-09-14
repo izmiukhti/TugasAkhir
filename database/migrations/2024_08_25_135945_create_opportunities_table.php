@@ -17,10 +17,15 @@ return new class extends Migration
             $table->longText('description');
             $table->longText('job_description');
             $table->longText('job_requirements');
+            $table->bigInteger('division_id')->unsigned();
+            $table->foreign('division_id')->references('id')->on('divisions');
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('clicked')->nullable();
             $table->integer('quota');
             $table->string('location');
-            $table->string('schema');
+            $table->bigInteger('schema_id')->unsigned();
+            $table->foreign('schema_id')->references('id')->on('schemas');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
