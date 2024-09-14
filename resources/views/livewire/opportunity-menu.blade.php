@@ -153,20 +153,56 @@
                             <textarea wire:model="job_requirement" style="height: 150px" class="form-control" id="job_requirement"></textarea>
                             @error('job_requirement') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="quotas">Quotas</label>
-                            <input type="number" class="form-control" id="quotas" wire:model="quotas">
-                            @error('quotas') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="quotas">Quotas</label>
+                                    <input type="number" class="form-control" id="quotas" wire:model="quotas">
+                                    @error('quotas') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" class="form-control" id="location" wire:model="location">
+                                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" class="form-control" id="location" wire:model="location">
-                            @error('location') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="schema">Schema</label>
-                            <input type="text" class="form-control" id="schema" wire:model="schema">
-                            @error('schema') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Division</label>
+                                    <select wire:model="division" class="form-control select2">
+                                        @foreach ($divisions as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('division') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select wire:model="category" class="form-control select2">
+                                        @foreach ($categories as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Schema</label>
+                                    <select wire:model="schema" class="form-control select2">
+                                        @foreach ($schemas as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('schema') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">

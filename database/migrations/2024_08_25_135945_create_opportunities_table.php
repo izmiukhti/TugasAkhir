@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('division_id')->references('id')->on('divisions');
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('clicked')->nullable();
+            $table->integer('clicked')->default(0);
             $table->integer('quota');
             $table->string('location');
             $table->bigInteger('schema_id')->unsigned();

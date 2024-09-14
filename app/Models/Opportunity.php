@@ -19,7 +19,9 @@ class Opportunity extends Model
         'clicked',
         'quota',
         'location',
-        'schema',
+        'division_id',
+        'category_id',
+        'schema_id',
         'start_date',
         'end_date',
     ];

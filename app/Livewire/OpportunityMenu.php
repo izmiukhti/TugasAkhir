@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Schema;
 use Livewire\Component;
+use App\Models\Category;
+use App\Models\Division;
 use App\Models\Opportunity;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
@@ -17,10 +20,26 @@ class OpportunityMenu extends Component
     public $isDetail = false;
     public $isCreate = false;
     public $isInformation = false;
-    public $name, $description, $job_description, $job_requirement, $quotas, $location, $schema, $open_date, $close_date, $opportunity;
+    // input form
+    public $name;
+    public $description;
+    public $job_description;
+    public $job_requirement;
+    public $division;
+    public $category;
+    public $schema;
+    public $quotas;
+    public $location;
+    public $open_date;
+    public $close_date;
+    //  end of form
+    public $opportunity;
+    public $schemas;
+    public $categories;
+    public $divisions;
 
     public function render(){
-        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%'.$this->search.'%')->paginate(6)]);
+        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at','DESC')->paginate(6)]);
     }
 
     public function home(){
@@ -48,10 +67,13 @@ class OpportunityMenu extends Component
         $this->isCreate = true;
         $this->isDetail = false;
         $this->isInformation = false;
+
+        $this->schemas = Schema::all();
+        $this->categories = Category::all();
+        $this->divisions = Division::all();
     }
 
     public function store(){
-        // dd($this->name, $this->description, $this->job_description, $this->job_requirement, $this->quotas, $this->location, $this->schema, $this->open_date, $this->close_date);
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -59,9 +81,11 @@ class OpportunityMenu extends Component
             'job_requirement' => 'required',
             'quotas' => 'required',
             'location' => 'required',
+            'division' => 'required',
+            'category' => 'required',
             'schema' => 'required',
             'open_date' => 'required',
-            'close_date' => 'required',
+            'close_date' => 'required|after:open_date',
         ]);
 
         $opportunity = Opportunity::create([
@@ -71,7 +95,9 @@ class OpportunityMenu extends Component
             'job_requirements' => $this->job_requirement,
             'quota' => $this->quotas,
             'location' => $this->location,
-            'schema' => $this->schema,
+            'division_id' => $this->division,
+            'category_id' => $this->category,
+            'schema_id' => $this->schema,
             'start_date' => $this->open_date,
             'end_date' => $this->close_date,
         ]);
@@ -81,7 +107,6 @@ class OpportunityMenu extends Component
     }
 
     public function information($id){
-        // dd($id);
         $opportunity = Opportunity::find($id);
 
         $this->opportunity = $opportunity;
