@@ -16,10 +16,10 @@ class OpportunityMenu extends Component
     public $search = '';
     public $isDetail = false;
     public $isCreate = false;
+    public $isInformation = false;
     public $name, $description, $job_description, $job_requirement, $quotas, $location, $schema, $open_date, $close_date, $opportunity;
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%'.$this->search.'%')->paginate(6)]);
     }
 
@@ -27,6 +27,7 @@ class OpportunityMenu extends Component
         $this->isHome = true;
         $this->isDetail = false;
         $this->isCreate = false;
+        $this->isInformation = false;
 
         $this->reset('name', 'description', 'job_description', 'job_requirement', 'quotas', 'location', 'schema', 'open_date', 'close_date', 'opportunity');
     }
@@ -39,12 +40,14 @@ class OpportunityMenu extends Component
         $this->isHome = false;
         $this->isDetail = true;
         $this->isCreate = false;
+        $this->isInformation = false;
     }
 
     public function create(){
         $this->isHome = false;
         $this->isCreate = true;
         $this->isDetail = false;
+        $this->isInformation = false;
     }
 
     public function store(){
@@ -75,5 +78,17 @@ class OpportunityMenu extends Component
 
         session()->flash('success', 'Opportunity created successfully.');
         $this->home();
+    }
+
+    public function information($id){
+        // dd($id);
+        $opportunity = Opportunity::find($id);
+
+        $this->opportunity = $opportunity;
+
+        $this->isHome = false;
+        $this->isDetail = false;
+        $this->isCreate = false;
+        $this->isInformation = true;
     }
 }
