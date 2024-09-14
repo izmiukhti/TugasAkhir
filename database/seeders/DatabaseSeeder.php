@@ -29,5 +29,11 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $this->call([
+            CategorySeeder::class,
+            // PostSeeder::class,
+            // UserSeeder::class,
+        ]);
     }
 }
