@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             DivisionSeeder::class,
             SchemaSeeder::class,
+            GenderSeeder::class,
             // PostSeeder::class,
             // UserSeeder::class,
         ]);
