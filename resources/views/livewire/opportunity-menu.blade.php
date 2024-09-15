@@ -112,7 +112,7 @@
                                 <div class="col-3 text-center">
                                     <a href="#" wire:click.prevent="home()" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a>
                                     <a href="#" wire:click.prevent="information('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-dark icon-left"><i class="fas fa-info-circle"></i> Detail</a>
-                                    <a href="#" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
+                                    <a href="#" wire:click.prevent="update('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-warning icon-left"><i class="far fa-edit"></i> Update</a>
                                     <a href="#" wire:click.prevent="delete('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-danger icon-left"><i class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
@@ -276,6 +276,112 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <textarea class="form-control" style="height: 150px" disabled>{{$opportunity->job_requirements}}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Division</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->division->name}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Category</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->category->name}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Quota Opportunity</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="number" class="form-control" value="{{$opportunity->quota}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Location Opportunity</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->location}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Schema Opportunity</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{$opportunity->schema->name}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Registration Period</strong></p>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <input type="date" class="form-control" value="{{$opportunity->start_date}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <input type="date" class="form-control" value="{{$opportunity->end_date}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if ($isUpdate)
+        <div class="section-header">
+            <h1>Update Opportunity Information</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Update Opportunity Information</h2>
+            <p class="section-lead">In this section you can update detail of Opportunity.</p>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2"><a href="#" wire:click="detail('{{$opportunity->id}}')" class="btn btn-sm btn-block btn-outline-primary icon-left"><i class="fas fa-arrow-left"></i> Back</a></div>
+                    </div>
+                    <br>
+                    <h5>General Information</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>Opportunity Name</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" wire:model="update_name">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Opportunity Description</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <textarea wire:model="update_description" id="description" class="form-control" style="height: 150px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Job Description</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <textarea wire:model="update_job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Job Requirements</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <textarea wire:model="update_job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
                             </div>
                         </div>
                         <div class="col-6">

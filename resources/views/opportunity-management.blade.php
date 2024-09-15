@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Division Management')
+@section('title', 'Opportunity Management')
 
 @push('styles')
     @livewireStyles

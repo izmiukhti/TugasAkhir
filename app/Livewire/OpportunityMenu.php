@@ -20,6 +20,7 @@ class OpportunityMenu extends Component
     public $isDetail = false;
     public $isCreate = false;
     public $isInformation = false;
+    public $isUpdate = false;
     // input form
     public $name;
     public $description;
@@ -33,6 +34,12 @@ class OpportunityMenu extends Component
     public $open_date;
     public $close_date;
     //  end of form
+    // update form
+    public $update_name;
+    public $update_description;
+    public $update_job_description;
+    public $update_job_requirement;
+    // end of update form
     public $opportunity;
     public $schemas;
     public $categories;
@@ -47,6 +54,7 @@ class OpportunityMenu extends Component
         $this->isDetail = false;
         $this->isCreate = false;
         $this->isInformation = false;
+        $this->isUpdate = false;
 
         $this->reset('name', 'description', 'job_description', 'job_requirement', 'quotas', 'location', 'schema', 'open_date', 'close_date', 'opportunity');
     }
@@ -58,6 +66,7 @@ class OpportunityMenu extends Component
         $this->isDetail = true;
         $this->isCreate = false;
         $this->isInformation = false;
+        $this->isUpdate = false;
     }
 
     public function create(){
@@ -65,6 +74,7 @@ class OpportunityMenu extends Component
         $this->isCreate = true;
         $this->isDetail = false;
         $this->isInformation = false;
+        $this->isUpdate = false;
 
         $this->schemas = Schema::all();
         $this->categories = Category::all();
@@ -113,6 +123,24 @@ class OpportunityMenu extends Component
         $this->isDetail = false;
         $this->isCreate = false;
         $this->isInformation = true;
+        $this->isUpdate = false;
+    }
+
+    public function update($id){
+        $opportunity = Opportunity::find($id);
+
+        // $this->opportunity = $opportunity;
+
+        $this->update_name = $opportunity->name;
+        $this->update_description = $opportunity->description;
+        $this->update_job_description = $opportunity->job_description;
+        $this->update_job_requirement = $opportunity->job_requirements;
+
+        $this->isHome = false;
+        $this->isDetail = false;
+        $this->isCreate = false;
+        $this->isInformation = false;
+        $this->isUpdate = true;
     }
     
     public function delete($id){
