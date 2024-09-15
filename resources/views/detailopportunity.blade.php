@@ -77,8 +77,11 @@
                     <h1>{{$opportunity->name}}</h1>
                 </div>
                 <div class="mx-auto pb-5 wow fadeIn" data-wow-delay=".3s">
+                    <div class="alert alert-warning" role="alert">
+                        Kegiatan ini tidak dipungut biaya apapun! Untuk mendaftar posisi silahkan melengkapi form berikut dengan benar. Informasi terkait posisi yang dibuka dapat anda lihat pada bagian kiri halaman ini.
+                    </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-12">
                             <p><strong>Opportunity Description</strong></p>
                             <p>{{$opportunity->description}}</p>
                             <hr>
@@ -100,13 +103,15 @@
                             <p><strong>Open Apply Period</strong></p>
                             <p>{{$opportunity->start_date}} until {{$opportunity->end_date}}</p>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-12">
                             <p><strong>Applicant Form</strong></p>
                             <div class="wow fadeIn" data-wow-delay=".3s">
                                 <div class="p-5 rounded contact-form">
                                     <div class="mb-4">
                                         <p class="text-white">Full Name</p>
+                                        <span class="text-white">Tuliskan nama lengkap anda sesuai dengan KTP</span>
                                         <input type="text" class="form-control border-0 py-3">
+                                        @error('fullname') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-white">Email Address</p>
