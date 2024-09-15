@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\DivisionSeeder;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\DivisionSeeder;
+use Database\Seeders\ReligionSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -16,12 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
         User::create([
             'name' => 'Administrator',
@@ -38,8 +33,11 @@ class DatabaseSeeder extends Seeder
             DivisionSeeder::class,
             SchemaSeeder::class,
             GenderSeeder::class,
-            // PostSeeder::class,
-            // UserSeeder::class,
+            ReligionSeeder::class,
+            MaritalSeeder::class,
+            EducationSeeder::class,
+            GraduateStatusSeeder::class,
+            SourceInformationSeeder::class,
         ]);
     }
 }
