@@ -9,21 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('applicants', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('opportunity_id');
-            $table->foreignUuid('opportunity_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::create('applicants', function (Blueprint $table) {
+    //         $table->uuid('id')->primary();
+    //         $table->uuid('opportunity_id');
+    //         $table->foreignUuid('opportunity_id')->constrained()->cascadeOnDelete();
+    //         $table->timestamps();
+    //     });
+    // }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('applicants');
-    }
+    // public function down(): void
+    // {
+    //     Schema::dropIfExists('applicants');
+    // }
 };
