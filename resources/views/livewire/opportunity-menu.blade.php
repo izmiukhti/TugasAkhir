@@ -12,7 +12,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-
                         </div>
                         <div class="col-4">
                             <input type="text" class="form-control" id="search" placeholder="Search Opportunity"
@@ -376,13 +375,13 @@
                 </div>
             </div>
         </div>
-        
+
     @endif
     @if ($isUpdate)
         <div class="section-header">
             <h1>Update Opportunity Information</h1>
         </div>
-        <form wire:submit.prevent="update">
+        <form wire:submit.prevent="setUpdate">
         <div class="section-body">
             <h2 class="section-title">Update Opportunity Information</h2>
             <p class="section-lead">In this section you can update detail of Opportunity.</p>
@@ -397,11 +396,19 @@
                     <h5>General Information</h5>
                     <div class="row">
                         <div class="col-6">
+                            <p><strong>Opportunity ID</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                        </div>
+                        <div class="col-6">
                             <p><strong>Opportunity Name</strong></p>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="name" wire:model="update_name">
+                                <input type="text" class="form-control" id="name" wire:model="name">
                             </div>
                         </div>
                         <div class="col-6">
@@ -409,7 +416,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea wire:model="update_description" id="description" class="form-control" style="height: 150px"></textarea>
+                                <textarea wire:model="description" id="description" class="form-control" style="height: 150px"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -417,7 +424,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea wire:model="update_job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
+                                <textarea wire:model="job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -425,7 +432,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea wire:model="update_job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
+                                <textarea wire:model="job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -488,10 +495,10 @@
                                     disabled>
                             </div>
                             <div>
-                                <button wire:click="save({{ $opportunity->id }})">Edit</button>
+                                <button class="submit btn btn-success">Save</button>
                             </div>
-                            
-                        </div>
+
+                         </div>
                     </div>
                 </div>
             </div>

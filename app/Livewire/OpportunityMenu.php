@@ -14,7 +14,7 @@ class OpportunityMenu extends Component
 {
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $isHome = true;
     public $search = '';
     public $isDetail = false;
@@ -35,21 +35,21 @@ class OpportunityMenu extends Component
     public $close_date;
     //  end of form
     // update form
-    public $update_name;
-    public $update_description;
-    public $update_job_description;
-    public $update_job_requirement;
+
+    public $id;
     // end of update form
     public $opportunity;
     public $schemas;
     public $categories;
     public $divisions;
 
-    public function render(){
-        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at','DESC')->paginate(6)]);
+    public function render()
+    {
+        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%' . $this->search . '%')->orderBy('created_at', 'DESC')->paginate(6)]);
     }
 
-    public function home(){
+    public function home()
+    {
         $this->isHome = true;
         $this->isDetail = false;
         $this->isCreate = false;
@@ -59,7 +59,8 @@ class OpportunityMenu extends Component
         $this->reset('name', 'description', 'job_description', 'job_requirement', 'quotas', 'location', 'schema', 'open_date', 'close_date', 'opportunity');
     }
 
-    public function detail($id){
+    public function detail($id)
+    {
         $opportunity = Opportunity::find($id);
         $this->opportunity = $opportunity;
         $this->isHome = false;
@@ -69,7 +70,8 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     }
 
-    public function create(){
+    public function create()
+    {
         $this->isHome = false;
         $this->isCreate = true;
         $this->isDetail = false;
@@ -81,7 +83,8 @@ class OpportunityMenu extends Component
         $this->divisions = Division::all();
     }
 
-    public function store(){
+    public function store()
+    {
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -96,7 +99,7 @@ class OpportunityMenu extends Component
             'close_date' => 'required|after:open_date',
         ]);
 
-        $opportunity = Opportunity::create([
+        Opportunity::create([
             'name' => $this->name,
             'description' => $this->description,
             'job_description' => $this->job_description,
@@ -114,7 +117,8 @@ class OpportunityMenu extends Component
         $this->home();
     }
 
-    public function information($id){
+    public function information($id)
+    {
         $opportunity = Opportunity::find($id);
 
         $this->opportunity = $opportunity;
@@ -126,15 +130,17 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     }
 
-    public function update($id){
+    public function update($id)
+    {
         $opportunity = Opportunity::find($id);
 
         // $this->opportunity = $opportunity;
 
-        $this->update_name = $opportunity->name;
-        $this->update_description = $opportunity->description;
-        $this->update_job_description = $opportunity->job_description;
-        $this->update_job_requirement = $opportunity->job_requirements;
+        $this->id = $opportunity->id;
+        $this->name = $opportunity->name;
+        $this->description = $opportunity->description;
+        $this->job_description = $opportunity->job_description;
+        $this->job_requirement = $opportunity->job_requirements;
 
         $this->isHome = false;
         $this->isDetail = false;
@@ -142,12 +148,38 @@ class OpportunityMenu extends Component
         $this->isInformation = false;
         $this->isUpdate = true;
     }
-    
-    public function delete($id){
-        $opportunity = Opportunity::find($id);
-        $opportunity->delete();
 
-        session()->flash('success', 'Opportunity deleted successfully.');
+    public function setUpdate()
+    {
+        // Validasi input
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255|',
+            'job_description' => 'required|string|max:255',
+            'job_requirement' => 'required|string|max:255',
+        ]);
+
+        $opportunity = Opportunity::find($this->id);
+        $opportunity->update([
+            'name' => $this->name,
+            'description' => $this->description,
+            'job_description' => $this->job_description,
+            'job_requirement' => $this->job_requirement,
+        ]);
+        session()->flash('success', 'Opportunity created successfully.');
+        $this->home();
+    }
+
+    public function destroy($id)
+    {
+        $opportunity = Opportunity::find($id);
+
+        if ($opportunity) {
+            $opportunity->forceDelete();
+            session()->flash('success', 'Opportunity deleted permanently.');
+        } else {
+            $this->home();
+        }
         $this->home();
     }
 }
