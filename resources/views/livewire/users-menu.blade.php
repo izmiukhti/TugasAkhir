@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            
+
                         </div>
                         <div class="col-4">
                             <input type="text" class="form-control" id="search" placeholder="Search User" wire:model.live.debounce.250ms="search">
@@ -54,7 +54,7 @@
                                         <a href="#" wire:click="destroy({{$user->id}})" wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
                                     </div>
                                 </td>
-                            </tr>                    
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -89,7 +89,7 @@
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>
@@ -105,17 +105,38 @@
             <h2 class="section-title">Update User</h2>
             <p class="section-lead">In this section you can update user data.</p>
             <div class="card">
-                <form wire:submit.prevent="setUpdate({{$id}})">
+                <form wire:submit.prevent="setUpdate({{ $id }})">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" wire:model="name">
-                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" wire:model="email">
-                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="status" class="form-control" id="status" wire:model="status">
+                            @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="devison">Devison</label>
+                            <input type="devison" class="form-control" id="devison" wire:model="devison">
+                            @error('devison') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" wire:model="phone_number"> <!-- Changed to 'tel' -->
+                            @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="buttons">
                             <a href="#" wire:click="back()" class="btn btn-primary">Back</a>

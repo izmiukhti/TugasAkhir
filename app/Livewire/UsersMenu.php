@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UsersMenu extends Component
 {
@@ -18,7 +19,7 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
-    public $id, $name, $email;
+    public $id, $name, $email, $password,$phone_number;
 
     public function render()
     {
@@ -80,20 +81,26 @@ class UsersMenu extends Component
         $this->back();
     }
 
-    public function setUpdate($id){
+    public function setUpdate($id) {
+        // Validasi input
         $this->validate([
-            'name' => 'required',
-            'email' => 'required|email'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id, // Unique email validation kecuali ID saat ini
+            'password' => ['nullable', password::min(8)], // Password opsional, minimal 8 karakter jika diisi
+            'phone_number' => 'required|string|max:15',
         ]);
 
         $user = User::find($id);
         $user->update([
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'password' => $this->password,
+            'phone_number' => $this->phone_number
+
         ]);
 
         session()->flash('success', 'User updated successfully.');
-        $this->reset('name', 'email');
+        $this->reset('name', 'email','password','phone_number');
         $this->back();
     }
 
