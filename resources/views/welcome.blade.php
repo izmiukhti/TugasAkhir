@@ -18,14 +18,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="../lib/animate/animate.min.css" rel="stylesheet">
+        <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -103,7 +103,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-envelope-open fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Software as a Service</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Optimalkan administrasi sekolah dengan akses data dan kelola proses secara efisien dengan teknologi berbasis cloud yang mudah digunakan dan terintegrasi</p>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-code fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Web Design</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Ciptakan situs web yang memikat dengan desain yang estetis dan fungsional, dioptimalkan untuk pengalaman pengguna yang luar biasa</p>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-file-code fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Web Development</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Kami memberikan solusi pengembangan website yang akan menciptakan peluang untuk menghasilkan lebih banyak prospek dan mencapai tujuan Anda.</p>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-external-link-alt fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">UI/UX Design</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Kami menciptakan desain yang memberikan pengalaman yang berarti, indah, dan relevan bagi pengguna</p>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                                 <div class="services-content-icon">
                                     <i class="fas fa-user-secret fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Web Cecurity</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Amankan situs web dengan solusi keamanan yang menyeluruh dan terpercaya untuk melindungi data</p>
                                 </div>
                                 
                             </div>
@@ -159,7 +159,7 @@
                                 <div class="services-content-icon">
                                     <i class="fas fa-laptop fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Programming</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Menghadirkan pemrograman yang berkualitas untuk solusi yang optimal dan sesuai kebutuhan bisnis</p>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +183,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-star fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Quality</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Kami berkomitmen menyediakan layanan terbaik dengan standar tinggi untuk memastikan kepuasan anda</p>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +194,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-handshake fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Integrity</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Kami memastikan kepercayaan anda terjaga, serta memberikan solusi yang dapat diandalkan dan bertanggung jawab</p>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                                 <div class="services-content-icon">
                                     <i class="fa fa-heart fa-7x mb-4 text-primary"></i>
                                     <h4 class="mb-3">Charity</h4>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.</p>
+                                    <p class="mb-4">Melalui aksi nyata dan kemitraan strategis, kami berkoitmen untuk membangun masa depan yang lebih baik dibidang pendidikan</p>
                                 </div>
                             </div>
                         </div>
@@ -343,7 +343,7 @@
                         <a href="index.html">
                             <img src="{{asset('assets/img/white-color-horizontal.png')}}" alt="logo" height="55px" width="193px">
                         </a>
-                        <p class="mt-4 text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur repellendus optio debitis.</p>
+                        <p class="mt-4 text-light">SchoolTech berkomitmen menjadi solusi IT terpercaya untuk sekolah, mendukung transformasi digital. Dengan layanan unggulan kami, sekolah dapat mempercepat digitalisasi secara efisien dan optimal.</p>
                         <div class="d-flex hightech-link">
                             <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-instagram text-primary"></i></a>
                             <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-0"><i class="fab fa-linkedin-in text-primary"></i></a>
@@ -386,13 +386,13 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="../lib/wow/wow.min.js"></script>
+        <script src="../lib/easing/easing.min.js"></script>
+        <script src="../lib/waypoints/waypoints.min.js"></script>
+        <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+        <script src="../js/main.js"></script>
     </body>
 
 </html>

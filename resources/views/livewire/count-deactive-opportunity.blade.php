@@ -8,7 +8,7 @@
                 <h4>Deactive Opportunities</h4>
             </div>
             <div class="card-body">
-                {{$opportunities}}
+                {{ $opportunities }}
             </div>
         </div>
     </div>

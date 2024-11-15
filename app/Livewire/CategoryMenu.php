@@ -80,8 +80,19 @@ class CategoryMenu extends Component
         $this->home();
     }
 
-    public function delete($id){
-        Category::find($id)->delete();
-        session()->flash('success', 'Category deleted successfully.');
+    public function destroy($id)
+    {
+        $division = Category::find($id);
+        
+        if ($division) {
+            if ($division->opportunities()->count() > 0) { 
+                session()->flash('error', 'Category cannot be deleted ');
+            } else {
+                $division->delete();
+                session()->flash('success', 'Category deleted successfully.');
+            }
+        } else {
+            session()->flash('error', 'Category not found.');
+        }
     }
 }

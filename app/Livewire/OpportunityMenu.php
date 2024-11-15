@@ -9,9 +9,14 @@ use App\Models\Division;
 use App\Models\Opportunity;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use App\Models\Applicant;
+use App\Models\Applicants;
+
 
 class OpportunityMenu extends Component
 {
+    public $selectedApplicant = null;
+    
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
 
@@ -21,7 +26,8 @@ class OpportunityMenu extends Component
     public $isCreate = false;
     public $isInformation = false;
     public $isUpdate = false;
-    // input form
+
+    // Input form
     public $name;
     public $description;
     public $job_description;
@@ -33,20 +39,21 @@ class OpportunityMenu extends Component
     public $location;
     public $open_date;
     public $close_date;
-    //  end of form
-    // update form
-
-    public $id;
-    // end of update form
+    
+    // Update form
+    public $update_name;
+    public $update_description;
+    public $update_job_description;
+    public $update_job_requirement;
+    
     public $opportunity;
     public $schemas;
     public $categories;
     public $divisions;
-
-    public function render()
-    {
-        return view('livewire.opportunity-menu', ['opportunities' => Opportunity::where('name', 'like', '%' . $this->search . '%')->orderBy('created_at', 'DESC')->paginate(6)]);
-    }
+    
+    public $selectedJob = null;
+    public $applicants ;
+    
 
     public function home()
     {
@@ -61,14 +68,22 @@ class OpportunityMenu extends Component
 
     public function detail($id)
     {
-        $opportunity = Opportunity::find($id);
-        $this->opportunity = $opportunity;
+        // Ambil kesempatan berdasarkan ID
+        $this->opportunity = Opportunity::find($id);
+    
+        // Ambil applicants yang sesuai dengan id_opportunity
+        $this->applicants = Applicants::where('id_opportunity', $id)->get();
+    
+        // Atur status tampilan
         $this->isHome = false;
         $this->isDetail = true;
         $this->isCreate = false;
         $this->isInformation = false;
         $this->isUpdate = false;
+    
+        // Debug output untuk memeriksa applicants
     }
+    
 
     public function create()
     {
@@ -85,6 +100,8 @@ class OpportunityMenu extends Component
 
     public function store()
     {
+    public function store()
+    {
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -99,6 +116,7 @@ class OpportunityMenu extends Component
             'close_date' => 'required|after:open_date',
         ]);
 
+        Opportunity::create([
         Opportunity::create([
             'name' => $this->name,
             'description' => $this->description,
@@ -119,10 +137,7 @@ class OpportunityMenu extends Component
 
     public function information($id)
     {
-        $opportunity = Opportunity::find($id);
-
-        $this->opportunity = $opportunity;
-
+        $this->opportunity = Opportunity::find($id);
         $this->isHome = false;
         $this->isDetail = false;
         $this->isCreate = false;
@@ -132,15 +147,13 @@ class OpportunityMenu extends Component
 
     public function update($id)
     {
+    public function update($id)
+    {
         $opportunity = Opportunity::find($id);
-
-        // $this->opportunity = $opportunity;
-
-        $this->id = $opportunity->id;
-        $this->name = $opportunity->name;
-        $this->description = $opportunity->description;
-        $this->job_description = $opportunity->job_description;
-        $this->job_requirement = $opportunity->job_requirements;
+        $this->update_name = $opportunity->name;
+        $this->update_description = $opportunity->description;
+        $this->update_job_description = $opportunity->job_description;
+        $this->update_job_requirement = $opportunity->job_requirements;
 
         $this->isHome = false;
         $this->isDetail = false;
@@ -149,31 +162,10 @@ class OpportunityMenu extends Component
         $this->isUpdate = true;
     }
 
-    public function setUpdate()
-    {
-        // Validasi input
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255|',
-            'job_description' => 'required|string|max:255',
-            'job_requirement' => 'required|string|max:255',
-        ]);
-
-        $opportunity = Opportunity::find($this->id);
-        $opportunity->update([
-            'name' => $this->name,
-            'description' => $this->description,
-            'job_description' => $this->job_description,
-            'job_requirement' => $this->job_requirement,
-        ]);
-        session()->flash('success', 'Opportunity created successfully.');
-        $this->home();
-    }
-
     public function destroy($id)
     {
         $opportunity = Opportunity::find($id);
-
+        
         if ($opportunity) {
             $opportunity->forceDelete();
             session()->flash('success', 'Opportunity deleted permanently.');
@@ -182,4 +174,45 @@ class OpportunityMenu extends Component
         }
         $this->home();
     }
+
+    public function mount()
+    {
+        // Inisialisasi applicants sebagai koleksi kosong
+        $this->applicants = collect();
+    }
+
+    // Fungsi untuk memilih job dan mengambil data applicant berdasarkan id_opportunity
+    public function render()
+    {
+        $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(6);
+    
+        return view('livewire.opportunity-menu', [
+            'opportunities' => $opportunities,
+            'applicants' => $this->applicants,
+        ]);
+    }
+    
+    public function selectJob($jobId)
+    {
+        $this->selectedJob = Opportunity::find($jobId);
+        $this->applicants = $this->selectedJob 
+            ? Applicants::where('id_opportunity', $jobId)->get()
+            : collect();
+        
+        $this->resetPage();
+    }
+    public function selectApplicant($id)
+    {
+        $this->selectedApplicant = Applicants::find($id);
+        $this->fill($this->selectedApplicant->toArray()); // Fill form fields with selected applicant data
+    }
+
+
+    
 }
+    
+    
+    
+    

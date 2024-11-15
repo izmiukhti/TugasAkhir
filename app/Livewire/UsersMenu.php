@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
+
 
 class UsersMenu extends Component
 {
@@ -19,7 +21,7 @@ class UsersMenu extends Component
     public $isEdit = false;
     public $isShow = false;
     public $search = '';
-    public $id, $name, $email, $password,$phone_number;
+    public $id, $name, $email,$password,$phone_number;
 
     public function render()
     {
@@ -42,6 +44,10 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->password = $user->password;
+        $this->phone_number = $user->phone_number;
+
+
     }
 
     public function show($id){
@@ -53,6 +59,8 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->phone_number = $user->phone_number;
+        
     }
 
     public function back(){
@@ -61,32 +69,37 @@ class UsersMenu extends Component
         $this->isEdit = false;
         $this->isShow = false;
 
-        $this->reset('id', 'name', 'email');
+        $this->reset('id', 'name', 'email','password','phone_number');
     }
 
-    public function save(){
-        $this->validate([
-            'name' => 'required',
-            'email' => 'required|email'
-        ]);
+    public function save()
+{
+    $this->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email',
+        'password' => ['required', Password::min(1)],
+        'phone_number' => 'required|string|max:15',
+    ]);
 
-        User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make('password')
-        ]);
-
+    User::create([
+        'name' => $this->name,
+        'email' => $this->email,
+        'password' => Hash::make($this->password),
+        'phone_number' => $this->phone_number,
+    ]);
         session()->flash('success', 'User created successfully.');
-        $this->reset('name', 'email');
+        $this->reset('name', 'email','password','phone_number');
         $this->back();
     }
 
     public function setUpdate($id) {
         // Validasi input
+    public function setUpdate($id) {
+        // Validasi input
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id, // Unique email validation kecuali ID saat ini
-            'password' => ['nullable', password::min(8)], // Password opsional, minimal 8 karakter jika diisi
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id, 
+            'password' => ['nullable', Password::min(8)],
             'phone_number' => 'required|string|max:15',
         ]);
 
@@ -97,16 +110,28 @@ class UsersMenu extends Component
             'password' => $this->password,
             'phone_number' => $this->phone_number
 
+            'email' => $this->email,
+            'password' => $this->password,
+            'phone_number' => $this->phone_number
+
         ]);
 
         session()->flash('success', 'User updated successfully.');
         $this->reset('name', 'email','password','phone_number');
+        $this->reset('name', 'email','password','phone_number');
         $this->back();
     }
 
-    public function destroy($id){
-        User::find($id)->delete();
-        session()->flash('success', 'User deleted successfully.');
-        $this->back();
+    public function destroy($id)
+    {
+        $user = User::find($id);
+    
+        if ($user) {
+            $user->delete(); 
+            session()->flash('success', 'User deleted successfully.');
+        } else {
+            return redirect()->back(); 
+        }
     }
+    
 }

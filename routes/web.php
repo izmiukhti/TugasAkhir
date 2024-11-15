@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -10,12 +11,17 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'index'])->name('welcome');
-Route::get('/opportunities/{id}', [App\Http\Controllers\PublicController::class, 'show'])->name('show');
+Route::post('/opportunities/{id}',  [PublicController::class, 'store'])->name('simpanDt');
+Route::get('/opportunities/{id}', [PublicController::class, 'show'])->name('show');
 
 
 Route::get('/coming-soon', function () {
     return view('comingsoon');
 })->name('comingsoon');
+
+Route::get('/applicant', function () {
+    return view('applicant-menu');
+})->middleware(['auth', 'verified'])->name('applicant');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
