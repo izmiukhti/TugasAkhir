@@ -10,11 +10,11 @@ use App\Models\Opportunity;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 use App\Models\Applicant;
-use App\Models\Applicants;
-
 
 class OpportunityMenu extends Component
 {
+
+    public $applicants;
     public $selectedApplicant = null;
     
     use WithPagination, WithoutUrlPagination;
@@ -26,8 +26,8 @@ class OpportunityMenu extends Component
     public $isCreate = false;
     public $isInformation = false;
     public $isUpdate = false;
-
-    // Input form
+    public $isDestroy = false;
+    // input form
     public $name;
     public $description;
     public $job_description;
@@ -51,12 +51,26 @@ class OpportunityMenu extends Component
     public $categories;
     public $divisions;
     
-    public $selectedJob = null;
-    public $applicants ;
+
+    public function render()
+    {
+        // Mengambil data applicants dan mengurutkannya berdasarkan id secara ascending
+        $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(6);
+    
+        $applicants = \App\Models\Applicant::orderBy('id', 'ASC')->get(); // Urutkan berdasarkan id secara ascending
+    
+        return view('livewire.opportunity-menu', [
+            'opportunities' => $opportunities,
+            'applicants' => $applicants,
+        ]);
+    }
+    
     
 
-    public function home()
-    {
+
+    public function home(){
         $this->isHome = true;
         $this->isDetail = false;
         $this->isCreate = false;
@@ -72,7 +86,7 @@ class OpportunityMenu extends Component
         $this->opportunity = Opportunity::find($id);
     
         // Ambil applicants yang sesuai dengan id_opportunity
-        $this->applicants = Applicants::where('id_opportunity', $id)->get();
+        $this->applicants = Applicant::where('opportunity_id', $id)->get();
     
         // Atur status tampilan
         $this->isHome = false;
@@ -80,6 +94,8 @@ class OpportunityMenu extends Component
         $this->isCreate = false;
         $this->isInformation = false;
         $this->isUpdate = false;
+    
+        // Debug output untuk memeriksa applicants
     
         // Debug output untuk memeriksa applicants
     }
@@ -145,74 +161,71 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     }
 
-    public function update($id)
-    {
-    public function update($id)
-    {
+    public function update($id){
+
         $opportunity = Opportunity::find($id);
+
+        // $this->opportunity = $opportunity;
+
+
         $this->update_name = $opportunity->name;
         $this->update_description = $opportunity->description;
         $this->update_job_description = $opportunity->job_description;
         $this->update_job_requirement = $opportunity->job_requirements;
 
         $this->isHome = false;
-        $this->isDetail = false;
-        $this->isCreate = false;
-        $this->isInformation = false;
-        $this->isUpdate = true;
-    }
 
-    public function destroy($id)
+        $this->isDetail = false;
+
+        $this->isCreate = false;
+
+        $this->isInformation = false;
+
+        $this->isUpdate = true;
+
+    }
+    public function destroy($id) 
     {
         $opportunity = Opportunity::find($id);
-        
+    
         if ($opportunity) {
-            $opportunity->forceDelete();
-            session()->flash('success', 'Opportunity deleted permanently.');
+            $opportunity->delete(); // Soft delete
+            session()->flash('success', 'Opportunity deleted successfully.');
         } else {
-            $this->home();
+            session()->flash('error', 'Opportunity not found.');
         }
+    
         $this->home();
     }
-
     public function mount()
     {
-        // Inisialisasi applicants sebagai koleksi kosong
-        $this->applicants = collect();
+        // Ambil daftar applicants dari database
+        $this->applicants = Applicant::all();
     }
 
-    // Fungsi untuk memilih job dan mengambil data applicant berdasarkan id_opportunity
-    public function render()
-    {
-        $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
-            ->orderBy('created_at', 'DESC')
-            ->paginate(6);
-    
-        return view('livewire.opportunity-menu', [
-            'opportunities' => $opportunities,
-            'applicants' => $this->applicants,
-        ]);
-    }
-    
-    public function selectJob($jobId)
-    {
-        $this->selectedJob = Opportunity::find($jobId);
-        $this->applicants = $this->selectedJob 
-            ? Applicants::where('id_opportunity', $jobId)->get()
-            : collect();
-        
-        $this->resetPage();
-    }
+    // Fungsi untuk memilih applicant
     public function selectApplicant($id)
     {
-        $this->selectedApplicant = Applicants::find($id);
-        $this->fill($this->selectedApplicant->toArray()); // Fill form fields with selected applicant data
+        $this->selectedApplicant = Applicant::find($id);
     }
+    public function saveOpportunity($id){
+        dd($id);
+        $this->validate([
+            'name' => 'required',
+            'update_description' => 'required',
+            'update_job_description' => 'required',
+            'update_job_requirement' => 'required',
+        ]);
 
+        Opportunity::find($id)->update([
+            'name' => $this->update_name,
+            'description' => $this->update_description,
+            'job_description' => $this->update_job_description,
+            'job_requirement' => $this->update_job_requirement
+        ]);
+//      
 
-    
-}
-    
-    
-    
-    
+        session()->flash('success', 'Opportunity updated successfully.');
+        $this->home();
+    }
+    }

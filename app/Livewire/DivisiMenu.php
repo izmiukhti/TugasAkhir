@@ -96,6 +96,7 @@ class DivisiMenu extends Component
             'name' => $this->name,
             'description' => $this->description,
         ]);
+        
 
         session()->flash('success', 'Division updated successfully.');
         $this->home();

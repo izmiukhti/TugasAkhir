@@ -65,6 +65,8 @@
                                             <p><strong>Jumlah Applicant</strong></p>
                                             <h4>{{ $item->applicants->count() }}</h4>
                                             <!-- Menghitung jumlah applicant -->
+                                            <h4>{{ $item->applicants->count() }}</h4>
+                                            <!-- Menghitung jumlah applicant -->
                                         </div>
                                     </div>
                                 </div>
@@ -75,6 +77,7 @@
                         </div>
                     </div>
                 @endforeach
+
 
             </div>
             <div class="card">
@@ -97,6 +100,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
+                            <h3>{{ $opportunity->name }}</h3>
+                            <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
+                                {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
+                                Category : {{ $opportunity->category->name }} <br>Open Date :
+                                {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
                             <h3>{{ $opportunity->name }}</h3>
                             <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
                                 {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
@@ -142,6 +150,18 @@
                                     <a href="#" wire:click.prevent="destroy('{{ $opportunity->id }}')"
                                         class="btn btn-sm btn-block btn-outline-danger icon-left"><i
                                             class="fas fa-times"></i> Delete</a>
+                                    <a href="#" wire:click.prevent="home()"
+                                        class="btn btn-sm btn-block btn-outline-primary icon-left"><i
+                                            class="fas fa-arrow-left"></i> Back</a>
+                                    <a href="#" wire:click.prevent="information('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-dark icon-left"><i
+                                            class="fas fa-info-circle"></i> Detail</a>
+                                    <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-warning icon-left"><i
+                                            class="far fa-edit"></i> Update</a>
+                                    <a href="#" wire:click.prevent="destroy('{{ $opportunity->id }}')"
+                                        class="btn btn-sm btn-block btn-outline-danger icon-left"><i
+                                            class="fas fa-times"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +172,11 @@
     @endif
     @if ($isDetail)
         <div class="section-body">
-            <h2 class="section-title">List Applicant</h2>
+            <h2>
+                <img src="{{ asset('assets/img/image.png') }}" alt="Icon" style="width: 100px; height: 100px;">
+                List Applicant
+            </h2>
+
             <p class="section-lead">In this section you can see a list of applicant data.</p>
         </div>
         <div class="section-body">
@@ -169,11 +193,11 @@
                                         <div class="col-12 mb-3"> <!-- Kolom tunggal untuk daftar applicant -->
                                             <div class="card card-info mb-3">
                                                 <div class="card-body"> <!-- Isi card -->
-                                                    <h5>{{ $applicant->fullname }}</h5>
+                                                    <h5>{{ $applicant->name }}</h5>
                                                     <p><strong>Email:</strong> {{ $applicant->email }}</p>
-                                                    <p><strong>Opportunity:</strong> {{ $applicant->id_opportunity }}
+                                                    <p><strong>Opportunity:</strong> {{ $applicant->opportunity_id }}
                                                     </p>
-                                                    <p><strong>Domisili:</strong> {{ $applicant->address }}
+                                                    <p><strong>Domisili:</strong> {{ $applicant->domicile_address }}
                                                     </p>
                                                     <!-- Tombol untuk melihat detail applicant -->
                                                     <a href="#"
@@ -203,7 +227,7 @@
                                 class="applicant-details">
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Name:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->fullname }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Email:</strong></div>
@@ -225,7 +249,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Gender:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->gender->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->gender_id }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Birth Date:</strong></div>
@@ -237,15 +261,15 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Religion:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->religion->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->religion_id }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Marital Status:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->maritalStatus->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->marital_id }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Education:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->education->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->education_id }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Education Institution:</strong></div>
@@ -261,16 +285,16 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Graduate Status:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->graduateStatus->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->graduate_status }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Graduate Year:</strong></div>
                                     <div class="col-8">{{ $selectedApplicant->graduate_year }}</div>
                                 </div>
-                                {{-- <div class="row mb-3">
+                                <div class="row mb-3">
                                     <div class="col-4"><strong>Information From:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->know_opportunity_form }}</div>
-                                </div> --}}
+                                    <div class="col-8">{{ $selectedApplicant->information_from }}</div>
+                                </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Portfolio:</strong></div>
                                     <div class="col-8">
@@ -282,27 +306,32 @@
                                 </div>
                                 <p><strong>CV:</strong>
                                     @if ($selectedApplicant->cv_file)
-                                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                        <div
+                                            style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                             @php
-                                                // Ambil URL file CV yang disimpan di folder public
-                                                $filePath = Storage::url($selectedApplicant->cv_file); // Pastikan menggunakan kolom cv_file yang benar
-                                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+                                                $filePath = Storage::url($selectedApplicant->cv_file); // Pastikan akses file publik
+                                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
                                             @endphp
-                                
+
                                             @if ($fileExtension === 'pdf')
-                                                <iframe src="{{ $filePath }}" width="100%" height="700px"></iframe> <!-- Menampilkan PDF -->
+                                                <iframe src="{{ $filePath }}" width="57%"
+                                                    height="700px"></iframe>
                                             @elseif (in_array($fileExtension, ['doc', 'docx']))
-                                                <iframe src="https://docs.google.com/viewer?url={{ urlencode($filePath) }}&embedded=true" width="100%" height="600px"></iframe> <!-- Menampilkan DOC/DOCX di Google Docs Viewer -->
+                                                <iframe
+                                                    src="https://docs.google.com/viewer?url={{ urlencode($filePath) }}&embedded=true"
+                                                    width="100%" height="600px"></iframe>
                                             @else
                                                 <p>Pratinjau tidak tersedia untuk format file ini.</p>
-                                                <a href="{{ url($filePath) }}" download>Download CV</a> <!-- Link download untuk format lainnya -->
+                                                <a href="{{ url($filePath) }}" download>Download CV</a>
                                             @endif
                                         </div>
                                     @else
-                                        Tidak ada CV yang diunggah. <!-- Pesan jika tidak ada file CV -->
+                                        Tidak ada CV yang diunggah.
                                     @endif
                                 </p>
-                                
+                            </div>
+                        </div>
+                    @else
                         <div class="col-12">
                             <h5>Detail Applicant</h5>
                             <div class="card">
@@ -639,7 +668,6 @@
                 </div>
             </div>
         </div>
-
     @endif
     @if ($isUpdate)
         <div class="section-header">
@@ -756,8 +784,7 @@
                                 </div>
 
                             </div>
-
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>

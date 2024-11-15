@@ -28,16 +28,17 @@ class DatabaseSeeder extends Seeder
 //             'updated_at' => now(),
 //         ]);
 
-//         $this->call([
-//             CategorySeeder::class,
-//             DivisionSeeder::class,
-//             SchemaSeeder::class,
-//             GenderSeeder::class,
-//             ReligionSeeder::class,
-//             MaritalSeeder::class,
-//             EducationSeeder::class,
-//             GraduateStatusSeeder::class,
-//             SourceInformationSeeder::class,
-//         ]);
+        $this->call([
+            ApplicantSeeder::class,
+            CategorySeeder::class,
+            DivisionSeeder::class,
+            SchemaSeeder::class,
+            GenderSeeder::class,
+            ReligionSeeder::class,
+            MaritalSeeder::class,
+            EducationSeeder::class,
+            GraduateStatusSeeder::class,
+            SourceInformationSeeder::class,
+        ]);
     }
 }
