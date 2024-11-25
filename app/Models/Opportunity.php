@@ -55,10 +55,10 @@ class Opportunity extends Model
     }
     public function applicants()
     {
-        return $this->hasMany(Applicant::class, 'opportunity_id');
+        return $this->hasMany(Applicants::class, 'id_opportunity');
     }
     
-}
+
 public function mount()
 {
     // Inisialisasi applicants sebagai koleksi kosong

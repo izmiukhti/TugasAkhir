@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Opportunity;
-use App\Models\Opportunity;
 use Livewire\Component;
 
 class CountActiveOpportunity extends Component
@@ -16,7 +15,6 @@ class CountActiveOpportunity extends Component
         return view('livewire.count-active-opportunity', [
             'opportunities' => $activeOpportunityCount
         ]);
-            'opportunities' => $activeOpportunityCount
-        ]);
+           
     }
 }

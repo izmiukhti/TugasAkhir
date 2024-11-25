@@ -92,7 +92,6 @@ class UsersMenu extends Component
         $this->back();
     }
 
-    public function setUpdate($id) {
         // Validasi input
     public function setUpdate($id) {
         // Validasi input
@@ -110,9 +109,6 @@ class UsersMenu extends Component
             'password' => $this->password,
             'phone_number' => $this->phone_number
 
-            'email' => $this->email,
-            'password' => $this->password,
-            'phone_number' => $this->phone_number
 
         ]);
 

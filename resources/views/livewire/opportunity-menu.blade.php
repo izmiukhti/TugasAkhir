@@ -8,8 +8,6 @@
             <h2 class="section-title">Opportunity List</h2>
             <p class="section-lead">In this section you can manage opportunity data such as adding, changing and
                 deleting.</p>
-            <p class="section-lead">In this section you can manage opportunity data such as adding, changing and
-                deleting.</p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -17,8 +15,6 @@
 
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="search" placeholder="Search Opportunity"
-                                wire:model.live.debounce.250ms="search">
                             <input type="text" class="form-control" id="search" placeholder="Search Opportunity"
                                 wire:model.live.debounce.250ms="search">
                         </div>
@@ -30,10 +26,6 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible show fade">
                             <div class="alert-body">
-                                <button class="close" data-dismiss="alert">
-                                    <span>×</span>
-                                </button>
-                                {{ session('success') }}
                                 <button class="close" data-dismiss="alert">
                                     <span>×</span>
                                 </button>
@@ -65,8 +57,6 @@
                                             <p><strong>Jumlah Applicant</strong></p>
                                             <h4>{{ $item->applicants->count() }}</h4>
                                             <!-- Menghitung jumlah applicant -->
-                                            <h4>{{ $item->applicants->count() }}</h4>
-                                            <!-- Menghitung jumlah applicant -->
                                         </div>
                                     </div>
                                 </div>
@@ -78,11 +68,9 @@
                     </div>
                 @endforeach
 
-
             </div>
             <div class="card">
                 <div class="card-body">
-                    {{ $opportunities->links() }}
                     {{ $opportunities->links() }}
                 </div>
             </div>
@@ -105,11 +93,6 @@
                                 {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
                                 Category : {{ $opportunity->category->name }} <br>Open Date :
                                 {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
-                            <h3>{{ $opportunity->name }}</h3>
-                            <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
-                                {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
-                                Category : {{ $opportunity->category->name }} <br>Open Date :
-                                {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
                             <p></p>
                             {{-- <div class="badges">
                                 <span class="badge badge-success">Aktif</span>
@@ -120,7 +103,6 @@
                                 <div class="col-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
-                                        <h4>{{ $opportunity->clicked }}</h4>
                                         <h4>{{ $opportunity->clicked }}</h4>
                                     </div>
                                 </div>
@@ -134,22 +116,9 @@
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Quota</strong></p>
                                         <h4>{{ $opportunity->quota }}</h4>
-                                        <h4>{{ $opportunity->quota }}</h4>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center">
-                                    <a href="#" wire:click.prevent="home()"
-                                        class="btn btn-sm btn-block btn-outline-primary icon-left"><i
-                                            class="fas fa-arrow-left"></i> Back</a>
-                                    <a href="#" wire:click.prevent="information('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-dark icon-left"><i
-                                            class="fas fa-info-circle"></i> Detail</a>
-                                    <a href="#" wire:click.prevent="update('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-warning icon-left"><i
-                                            class="far fa-edit"></i> Update</a>
-                                    <a href="#" wire:click.prevent="destroy('{{ $opportunity->id }}')"
-                                        class="btn btn-sm btn-block btn-outline-danger icon-left"><i
-                                            class="fas fa-times"></i> Delete</a>
                                     <a href="#" wire:click.prevent="home()"
                                         class="btn btn-sm btn-block btn-outline-primary icon-left"><i
                                             class="fas fa-arrow-left"></i> Back</a>
@@ -172,11 +141,7 @@
     @endif
     @if ($isDetail)
         <div class="section-body">
-            <h2>
-                <img src="{{ asset('assets/img/image.png') }}" alt="Icon" style="width: 100px; height: 100px;">
-                List Applicant
-            </h2>
-
+            <h2 class="section-title">List Applicant</h2>
             <p class="section-lead">In this section you can see a list of applicant data.</p>
         </div>
         <div class="section-body">
@@ -193,11 +158,11 @@
                                         <div class="col-12 mb-3"> <!-- Kolom tunggal untuk daftar applicant -->
                                             <div class="card card-info mb-3">
                                                 <div class="card-body"> <!-- Isi card -->
-                                                    <h5>{{ $applicant->name }}</h5>
+                                                    <h5>{{ $applicant->fullname }}</h5>
                                                     <p><strong>Email:</strong> {{ $applicant->email }}</p>
-                                                    <p><strong>Opportunity:</strong> {{ $applicant->opportunity_id }}
+                                                    <p><strong>Opportunity:</strong> {{ $applicant->id_opportunity }}
                                                     </p>
-                                                    <p><strong>Domisili:</strong> {{ $applicant->domicile_address }}
+                                                    <p><strong>Domisili:</strong> {{ $applicant->address }}
                                                     </p>
                                                     <!-- Tombol untuk melihat detail applicant -->
                                                     <a href="#"
@@ -227,7 +192,7 @@
                                 class="applicant-details">
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Name:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->name }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->fullname }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Email:</strong></div>
@@ -249,7 +214,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Gender:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->gender_id }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->gender->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Birth Date:</strong></div>
@@ -261,15 +226,15 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Religion:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->religion_id }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->religion->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Marital Status:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->marital_id }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->maritalStatus->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Education:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->education_id }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->education->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Education Institution:</strong></div>
@@ -285,16 +250,16 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Graduate Status:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->graduate_status }}</div>
+                                    <div class="col-8">{{ $selectedApplicant->graduateStatus->name }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Graduate Year:</strong></div>
                                     <div class="col-8">{{ $selectedApplicant->graduate_year }}</div>
                                 </div>
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <div class="col-4"><strong>Information From:</strong></div>
-                                    <div class="col-8">{{ $selectedApplicant->information_from }}</div>
-                                </div>
+                                    <div class="col-8">{{ $selectedApplicant->know_opportunity_form }}</div>
+                                </div> --}}
                                 <div class="row mb-3">
                                     <div class="col-4"><strong>Portfolio:</strong></div>
                                     <div class="col-8">
@@ -309,8 +274,9 @@
                                         <div
                                             style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                             @php
-                                                $filePath = Storage::url($selectedApplicant->cv_file); // Pastikan akses file publik
-                                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                                                // Ambil URL file CV yang disimpan di folder public
+                                                $filePath = Storage::url($selectedApplicant->cv_file); // Pastikan menggunakan kolom cv_file yang benar
+                                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
                                             @endphp
 
                                             @if ($fileExtension === 'pdf')
@@ -323,6 +289,7 @@
                                             @else
                                                 <p>Pratinjau tidak tersedia untuk format file ini.</p>
                                                 <a href="{{ url($filePath) }}" download>Download CV</a>
+                                                <!-- Link download untuk format lainnya -->
                                             @endif
                                         </div>
                                     @else
@@ -369,16 +336,10 @@
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea wire:model="description" style="height: 150px" class="form-control" id="description"></textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -389,16 +350,10 @@
                             @error('job_description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            @error('job_description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="job_requirement">Job Requirement</label>
                             <textarea wire:model="job_requirement" style="height: 150px" class="form-control" id="job_requirement"></textarea>
-                            @error('job_requirement')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                             @error('job_requirement')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -411,18 +366,12 @@
                                     @error('quotas')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    @error('quotas')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="location">Location</label>
                                     <input type="text" class="form-control" id="location" wire:model="location">
-                                    @error('location')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                     @error('location')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -435,15 +384,10 @@
                                     <label>Division</label>
                                     <select wire:model="division" class="form-control select2">
                                         <option value="">Pilih Division</option> <!-- Opsi default kosong -->
-                                        <option value="">Pilih Division</option> <!-- Opsi default kosong -->
                                         @foreach ($divisions as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('division')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                     @error('division')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -454,15 +398,10 @@
                                     <label>Category</label>
                                     <select wire:model="category" class="form-control select2">
                                         <option value="">Pilih Kategori</option> <!-- Opsi default kosong -->
-                                        <option value="">Pilih Kategori</option> <!-- Opsi default kosong -->
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('category')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                     @error('category')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -473,15 +412,10 @@
                                     <label>Schema</label>
                                     <select wire:model="schema" class="form-control select2">
                                         <option value="">Pilih Schema</option> <!-- Opsi default kosong -->
-                                        <option value="">Pilih Schema</option> <!-- Opsi default kosong -->
                                         @foreach ($schemas as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('schema')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                     @error('schema')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -497,21 +431,11 @@
                                     @error('open_date')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    <input type="date" class="form-control" id="open_date"
-                                        wire:model="open_date">
-                                    @error('open_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="close_date">Close Registration Date</label>
-                                    <input type="date" class="form-control" id="close_date"
-                                        wire:model="close_date">
-                                    @error('close_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                     <input type="date" class="form-control" id="close_date"
                                         wire:model="close_date">
                                     @error('close_date')
@@ -524,7 +448,6 @@
                             <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-
 
                     </div>
                 </form>
@@ -545,9 +468,6 @@
                         <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
                                 class="btn btn-sm btn-block btn-outline-primary icon-left"><i
                                     class="fas fa-arrow-left"></i> Back</a></div>
-                        <div class="col-2"><a href="#" wire:click="detail('{{ $opportunity->id }}')"
-                                class="btn btn-sm btn-block btn-outline-primary icon-left"><i
-                                    class="fas fa-arrow-left"></i> Back</a></div>
                     </div>
                     <br>
                     <h5>General Information</h5>
@@ -559,8 +479,6 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" value="{{ $opportunity->name }}"
                                     disabled>
-                                <input type="text" class="form-control" value="{{ $opportunity->name }}"
-                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -568,7 +486,6 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->description }}</textarea>
                                 <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->description }}</textarea>
                             </div>
                         </div>
@@ -578,7 +495,6 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_description }}</textarea>
-                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_description }}</textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -587,7 +503,6 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_requirements }}</textarea>
-                                <textarea class="form-control" style="height: 150px" disabled>{{ $opportunity->job_requirements }}</textarea>
                             </div>
                         </div>
                         <div class="col-6">
@@ -595,8 +510,6 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control"
-                                    value="{{ $opportunity->division->name }}" disabled>
                                 <input type="text" class="form-control"
                                     value="{{ $opportunity->division->name }}" disabled>
                             </div>
@@ -608,8 +521,6 @@
                             <div class="form-group">
                                 <input type="text" class="form-control"
                                     value="{{ $opportunity->category->name }}" disabled>
-                                <input type="text" class="form-control"
-                                    value="{{ $opportunity->category->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -617,8 +528,6 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="number" class="form-control" value="{{ $opportunity->quota }}"
-                                    disabled>
                                 <input type="number" class="form-control" value="{{ $opportunity->quota }}"
                                     disabled>
                             </div>
@@ -630,8 +539,6 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" value="{{ $opportunity->location }}"
                                     disabled>
-                                <input type="text" class="form-control" value="{{ $opportunity->location }}"
-                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -639,8 +546,6 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" value="{{ $opportunity->schema->name }}"
-                                    disabled>
                                 <input type="text" class="form-control" value="{{ $opportunity->schema->name }}"
                                     disabled>
                             </div>
@@ -652,14 +557,10 @@
                             <div class="form-group">
                                 <input type="date" class="form-control" value="{{ $opportunity->start_date }}"
                                     disabled>
-                                <input type="date" class="form-control" value="{{ $opportunity->start_date }}"
-                                    disabled>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
-                                    disabled>
                                 <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
                                     disabled>
                             </div>
@@ -673,7 +574,7 @@
         <div class="section-header">
             <h1>Update Opportunity Information</h1>
         </div>
-        <form wire:submit.prevent="saveOpportunity({{ $opportunity->id }})">
+        <form wire:submit.prevent="setUpdate">
             <div class="section-body">
                 <h2 class="section-title">Update Opportunity Information</h2>
                 <p class="section-lead">In this section you can update detail of Opportunity.</p>
@@ -688,12 +589,11 @@
                         <h5>General Information</h5>
                         <div class="row">
                             <div class="col-6">
-                                <p><strong>Opportunity Name erin</strong></p>
+                                <p><strong>Opportunity Name</strong></p>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="name"
-                                        wire:model="update_name">
+                                    <input type="text" class="form-control" id="name" wire:model="name">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -701,7 +601,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <textarea wire:model="update_description" id="description" class="form-control" style="height: 150px"></textarea>
+                                    <textarea wire:model="description" id="description" class="form-control" style="height: 150px"></textarea>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -709,7 +609,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <textarea wire:model="update_job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
+                                    <textarea wire:model="job_description" id="job_description" class="form-control" style="height: 150px"></textarea>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -717,7 +617,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <textarea wire:model="update_job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
+                                    <textarea wire:model="job_requirement" id="job_requirement" class="form-control" style="height: 150px"></textarea>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -725,64 +625,60 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"
-                                        value="{{ $opportunity->division->name }}" disabled>
+                                    <select class="form-control" wire:model="division">
+                                        @foreach ($divisions as $division)
+                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <p><strong>Category</strong></p>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"
-                                        value="{{ $opportunity->category->name }}" disabled>
+                                    <select class="form-control" wire:model="category">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <p><strong>Quota Opportunity</strong></p>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" value="{{ $opportunity->quota }}"
-                                        disabled>
+                                    <input type="number" class="form-control" wire:model="quotas">
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <p><strong>Location Opportunity</strong></p>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{ $opportunity->location }}"
-                                        disabled>
+                                    <input type="text" class="form-control" wire:model="location">
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <p><strong>Schema Opportunity</strong></p>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control"
-                                        value="{{ $opportunity->schema->name }}" disabled>
-                                </div>
-                            </div>
+
                             <div class="col-6">
                                 <p><strong>Registration Period</strong></p>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <input type="date" class="form-control"
-                                        value="{{ $opportunity->start_date }}" disabled>
+                                    <input type="date" class="form-control" wire:model="open_date">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <input type="date" class="form-control" value="{{ $opportunity->end_date }}"
-                                        disabled>
+                                    <input type="date" class="form-control" wire:model="close_date">
                                 </div>
-                                <div>
-                                    <button type="button" wire:click="saveOpportunity">Edit</button>
-                                </div>
-
+                            </div>
+                            <div>
+                                <button class="submit btn btn-success">Save</button>
                             </div>
                         </div>
                     </div>

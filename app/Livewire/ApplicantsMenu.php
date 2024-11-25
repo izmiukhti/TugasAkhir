@@ -20,12 +20,14 @@ class ApplicantsMenu extends Component
     public $fullname, $email, $phone_number;
     public $search = '';
 
+  
     // Fungsi render untuk menampilkan data applicant yang dipaginasi
     public function render()
     {
         return view('livewire.applicants-menu', [
             'applicants' => Applicants::where('fullname', 'like', '%' . $this->search . '%')->paginate(5)
         ]);
+        
     }
 
     // Fungsi show untuk menampilkan detail applicant
@@ -61,14 +63,18 @@ class ApplicantsMenu extends Component
         // Reset data form
         $this->reset('fullname', 'email', 'phone_number');
     }
-    public function destroy($id) {
-        $applicant = Applicants::find($id);
-    
-        if ($applicant) {
-            $applicant->forceDelete();
-            session()->flash('success', 'User deleted permanently');
-        }else{
-            $this->back();
-        }
+    public function destroy($id)
+{
+    $applicant = Applicants::find($id);
+
+    if ($applicant) {
+        // Gunakan soft delete
+        $applicant->delete();
+        session()->flash('success', 'Applicant deleted successfully.');
+    } else {
+        // Arahkan ke halaman sebelumnya jika data tidak ditemukan
+        $this->back();
     }
+}
+
 }

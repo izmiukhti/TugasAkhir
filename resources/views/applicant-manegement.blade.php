@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Applicant Management')
+@section('title', 'Category Management')
 
 @push('styles')
     @livewireStyles
@@ -11,7 +11,7 @@
 @endpush
 
 @section('content')
-<section class="section">
-    @livewire('applicants')
-</section>
+    <section class="section">
+        @livewire('applicants-menu')
+    </section>
 @endsection

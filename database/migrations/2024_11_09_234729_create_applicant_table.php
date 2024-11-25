@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('information_from'); // darimana mendapatkan informasi pekerjaan
             $table->string('portfolio_link');
             $table->string('cv_file');
+            $table->softDeletes();
             $table->timestamps();
         
             // Definisikan foreign keys

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Applicants;
+use App\Models\ApplicantsModel;
 use App\Models\Schema;
 use Livewire\Component;
 use App\Models\Category;
@@ -50,16 +52,17 @@ class OpportunityMenu extends Component
     public $schemas;
     public $categories;
     public $divisions;
+    public $id;
     
 
     public function render()
     {
+        
         // Mengambil data applicants dan mengurutkannya berdasarkan id secara ascending
         $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('created_at', 'DESC')
             ->paginate(6);
-    
-        $applicants = \App\Models\Applicant::orderBy('id', 'ASC')->get(); // Urutkan berdasarkan id secara ascending
+        $applicants = Applicants::orderBy('id', 'ASC')->get(); // Urutkan berdasarkan id secara ascending
     
         return view('livewire.opportunity-menu', [
             'opportunities' => $opportunities,
@@ -86,7 +89,7 @@ class OpportunityMenu extends Component
         $this->opportunity = Opportunity::find($id);
     
         // Ambil applicants yang sesuai dengan id_opportunity
-        $this->applicants = Applicant::where('opportunity_id', $id)->get();
+        $this->applicants = Applicants::where('id_opportunity', $id)->get();
     
         // Atur status tampilan
         $this->isHome = false;
@@ -116,8 +119,7 @@ class OpportunityMenu extends Component
 
     public function store()
     {
-    public function store()
-    {
+        
         $this->validate([
             'name' => 'required',
             'description' => 'required',
@@ -132,7 +134,6 @@ class OpportunityMenu extends Component
             'close_date' => 'required|after:open_date',
         ]);
 
-        Opportunity::create([
         Opportunity::create([
             'name' => $this->name,
             'description' => $this->description,
@@ -161,29 +162,33 @@ class OpportunityMenu extends Component
         $this->isUpdate = false;
     }
 
-    public function update($id){
+    public function update($id)
+{
+    $opportunity = Opportunity::find($id);
 
-        $opportunity = Opportunity::find($id);
+    $this->id = $opportunity->id;
+    $this->name = $opportunity->name;
+    $this->description = $opportunity->description;
+    $this->job_description = $opportunity->job_description;
+    $this->job_requirement = $opportunity->job_requirements;
+    $this->division = $opportunity->division_id;
+    $this->category = $opportunity->category_id;
+    $this->quotas = $opportunity->quota;
+    $this->location = $opportunity->location;
+    $this->open_date = $opportunity->start_date;
+    $this->close_date = $opportunity->end_date;
 
-        // $this->opportunity = $opportunity;
+    $this->schemas = Schema::all();
+    $this->categories = Category::all();
+    $this->divisions = Division::all();
 
+    $this->isHome = false;
+    $this->isDetail = false;
+    $this->isCreate = false;
+    $this->isInformation = false;
+    $this->isUpdate = true;
+}
 
-        $this->update_name = $opportunity->name;
-        $this->update_description = $opportunity->description;
-        $this->update_job_description = $opportunity->job_description;
-        $this->update_job_requirement = $opportunity->job_requirements;
-
-        $this->isHome = false;
-
-        $this->isDetail = false;
-
-        $this->isCreate = false;
-
-        $this->isInformation = false;
-
-        $this->isUpdate = true;
-
-    }
     public function destroy($id) 
     {
         $opportunity = Opportunity::find($id);
@@ -200,32 +205,46 @@ class OpportunityMenu extends Component
     public function mount()
     {
         // Ambil daftar applicants dari database
-        $this->applicants = Applicant::all();
+        $this->applicants = Applicants::all();
     }
 
     // Fungsi untuk memilih applicant
     public function selectApplicant($id)
     {
-        $this->selectedApplicant = Applicant::find($id);
+        $this->selectedApplicant = Applicants::find($id);
     }
-    public function saveOpportunity($id){
-        dd($id);
-        $this->validate([
-            'name' => 'required',
-            'update_description' => 'required',
-            'update_job_description' => 'required',
-            'update_job_requirement' => 'required',
-        ]);
+    public function setUpdate()
+{
+    $this->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string|max:255',
+        'job_description' => 'required|string|max:255',
+        'job_requirement' => 'required|string|max:255',
+        'division' => 'required|integer',
+        'category' => 'required|integer',
+        'quotas' => 'required|integer',
+        'location' => 'required|string|max:255',
+        'open_date' => 'required|date',
+        'close_date' => 'required|date|after:open_date',
+    ]);
 
-        Opportunity::find($id)->update([
-            'name' => $this->update_name,
-            'description' => $this->update_description,
-            'job_description' => $this->update_job_description,
-            'job_requirement' => $this->update_job_requirement
-        ]);
-//      
+    $opportunity = Opportunity::find($this->id);
 
-        session()->flash('success', 'Opportunity updated successfully.');
-        $this->home();
-    }
+    $opportunity->update([
+        'name' => $this->name,
+        'description' => $this->description,
+        'job_description' => $this->job_description,
+        'job_requirements' => $this->job_requirement,
+        'division_id' => $this->division,
+        'category_id' => $this->category,
+        'quota' => $this->quotas,
+        'location' => $this->location,
+        'start_date' => $this->open_date,
+        'end_date' => $this->close_date,
+    ]);
+
+    session()->flash('success', 'Opportunity updated successfully.');
+    $this->home();
+}
+
     }
