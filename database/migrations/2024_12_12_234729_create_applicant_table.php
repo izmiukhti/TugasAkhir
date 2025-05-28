@@ -33,34 +33,34 @@ return new class extends Migration
             $table->string('cv_file');
             $table->softDeletes();
             $table->timestamps();
-        
+
             // Definisikan foreign keys
             $table->foreign('id_opportunity')
                   ->references('id')
                   ->on('opportunities')
                   ->onDelete('cascade');
-                  
+
             $table->foreign('gender_id')
                   ->references('id')
                   ->on('genders')
                   ->onDelete('cascade');
-        
+
             $table->foreign('religion_id')
                   ->references('id')
                   ->on('religions')
                   ->onDelete('cascade');
-                  
+
             $table->foreign('marital_id')
                   ->references('id')
                   ->on('maritals')
                   ->onDelete('cascade');
-        
+
             $table->foreign('education_id')
                   ->references('id')
                   ->on('education')
                   ->onDelete('cascade');
         });
-    }        
+    }
 
     public function down()
     {

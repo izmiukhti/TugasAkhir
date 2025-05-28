@@ -166,7 +166,7 @@
                                                     </p>
                                                     <!-- Tombol untuk melihat detail applicant -->
                                                     <a href="#"
-                                                        wire:click="selectApplicant({{ $applicant->id }})"
+                                                        wire:click="selectApplicant('{{ $applicant->id }}')"
                                                         class="btn btn-outline-info btn-block">
                                                         <i class="fas fa-info-circle"></i> Details
                                                     </a>
@@ -314,9 +314,6 @@
             </div>
         </div>
     @endif
-
-
-
 
 
     @if ($isCreate)

@@ -11,7 +11,10 @@ class Division extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = [
+        'name',
+        'description'
+    ];
 
     public function opportunities(){
         return $this->hasMany(Opportunity::class);

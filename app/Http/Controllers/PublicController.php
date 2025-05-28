@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicantSubmittedMail;
 use App\Models\Applicants;
+use App\Models\CvScreening;
 use App\Models\Education;
 use App\Models\Gender;
 use App\Models\GraduatedStatus;
@@ -11,22 +13,24 @@ use App\Models\Opportunity;
 use App\Models\Religion;
 use App\Models\SourceInformation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PublicController extends Controller
 {
-    
+
     public function index()
     {
         $opportunities = Opportunity::latest()->get();
         return view('welcome', compact('opportunities'));
     }
-    
+
 public function store(Request $request, $id)
 {
     $request->validate([
         'fullname' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
+        'email' => 'required|email|max:255|unique:applicant,email',
         'phone_number' => 'required|string|max:15',
         'portfolio_link' => 'nullable|url',
         'cv_file' => 'required|file|mimes:pdf|max:2048',
@@ -38,13 +42,12 @@ public function store(Request $request, $id)
         'education_id' => 'required|integer', // Foreign key untuk tingkat pendidikan
         'education_institution' => 'required|string',
         'majority' => 'required|string',
-        'gpa' => 'nullable|numeric|max:4',
+        'gpa' => 'nullable|numeric|max:5 ',
         'graduate_status' => 'required|string',
         'graduate_year' => 'required|integer',
         'information_from' => 'nullable|string',
     ]);
 
-    // Simpan file CV dan dapatkan path
 // Simpan file CV dan dapatkan path
 $cvFile = $request->file('cv_file');
 
@@ -55,15 +58,15 @@ if ($cvFile->getClientOriginalExtension() !== 'pdf') {
 
 // Simpan file dengan nama unik dan ekstensi yang benar
 $cvPath = $cvFile->storeAs(
-    'cvs', 
-    'cv-' . time() . '.' . $cvFile->getClientOriginalExtension(), 
+    'cvs',
+    'cv-' . time() . '.' . $cvFile->getClientOriginalExtension(),
     'public'
 );
 
     // Buat instance baru untuk pelamar
     $applicant = new Applicants();
-    
-    $applicant->id = (string) Str::uuid(); 
+
+    $applicant->id = (string) Str::uuid();
     $applicant->id_opportunity = $id;
     $applicant->fullname = $request->fullname;
     $applicant->email = $request->email;
@@ -85,20 +88,39 @@ $cvPath = $cvFile->storeAs(
 
     // Menyimpan data dan mengembalikan respon
     try {
+
+        $cvScreening = new CvScreening;
+
+        $cvScreening->applicant_id = $applicant->id;
+        $cvScreening->decision_id =1;
+        $cvScreening->score = 0;
+        $cvScreening->notes = '-';
+
         $applicant->save();
+        $cvScreening->save();
+        // dd($cvScreening);
+
+        Mail::to($applicant->email)->send(new ApplicantSubmittedMail([
+                'name' => $applicant->fullname,
+                'position' => optional($applicant->opportunity)->name ?? 'Posisi yang dilamar',
+        ]));
+
         return redirect()->back()->with('success', 'Application submitted successfully.');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Failed to submit application: ' . $e->getMessage());
+    }
+        catch (\Exception $e) {
+            Log::error('Gagal kirim email: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Data berhasil disimpan, tapi gagal mengirim email.');
     }
 }
+
 public function show($id)
 {
     $opportunity = Opportunity::find($id);
 
     $genders = Gender::all();
-    $religions = Religion::all();  // Ambil semua data religion
-    $maritalStatuses = Marital::all();  // Ambil semua data marital status
-    $educations = Education::all();  // Ambil semua data education
+    $religions = Religion::all();
+    $maritalStatuses = Marital::all();
+    $educations = Education::all();
     $graduate_status = GraduatedStatus ::all();
     $informationSource = SourceInformation ::all();
 
@@ -112,7 +134,5 @@ public function show($id)
         return redirect()->route('opportunity.index')->with('error', 'Opportunity not found.');
     }
 }
-
-
 
 }

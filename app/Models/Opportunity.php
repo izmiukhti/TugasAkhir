@@ -26,7 +26,7 @@ class Opportunity extends Model
         'category_id',
         'schema_id',
         'start_date',
-        'end_date',
+        'end_date'
     ];
 
     // Relasi
@@ -57,7 +57,7 @@ class Opportunity extends Model
     {
         return $this->hasMany(Applicants::class, 'id_opportunity');
     }
-    
+
 
 public function mount()
 {
@@ -81,10 +81,10 @@ public function render()
 public function selectJob($jobId)
 {
     $this->selectedJob = Opportunity::find($jobId);
-    $this->applicants = $this->selectedJob 
+    $this->applicants = $this->selectedJob
         ? Applicants::where('id_opportunity', $jobId)->get()
         : collect();
-    
+
     $this->resetPage();
 }
 

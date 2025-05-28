@@ -8,8 +8,6 @@
             <h2 class="section-title">Category List</h2>
             <p class="section-lead">In this section you can manage category data such as adding, changing and deleting.
             </p>
-            <p class="section-lead">In this section you can manage category data such as adding, changing and deleting.
-            </p>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -18,8 +16,6 @@
 
                         </div>
                         <div class="col-4">
-                            <input wire:model.live.debounce.250ms="search" type="text" class="form-control"
-                                id="search" placeholder="Search Category">
                             <input wire:model.live.debounce.250ms="search" type="text" class="form-control"
                                 id="search" placeholder="Search Category">
                         </div>
@@ -35,22 +31,12 @@
                                     <span>×</span>
                                 </button>
                                 {{ session('success') }}
-                                <button class="close" data-dismiss="alert">
-                                    <span>×</span>
-                                </button>
-                                {{ session('success') }}
                             </div>
                         </div>
                         <br>
                     @endif
                     <table class="table table-striped">
                         <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Action</th>
-                            </tr>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
@@ -79,7 +65,6 @@
                         </tbody>
                     </table>
                     {{ $categories->links() }}
-                    {{ $categories->links() }}
                 </div>
             </div>
         </div>
@@ -101,16 +86,10 @@
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" style="height: 121px;" wire:model="description"></textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -127,13 +106,13 @@
         </div>
     @endif
     @if ($isUpdate)
-                <div class="section-header">
-                    <h1>Update Category</h1>
-                </div>
+        <div class="section-header">
+            <h1>Update Category</h1>
+        </div>
 
         <div class="section-body">
-            <h2 class="section-title">Create Category</h2>
-            <p class="section-lead">In this section you can create new category to access the system.</p>
+            <h2 class="section-title">Update Category</h2>
+            <p class="section-lead">In this section you can update new category to access the system.</p>
             <div class="card">
                 <form wire:submit.prevent="setUpdate({{ $id }})">
                     <div class="card-body">

@@ -20,14 +20,14 @@ class ApplicantsMenu extends Component
     public $fullname, $email, $phone_number;
     public $search = '';
 
-  
+
     // Fungsi render untuk menampilkan data applicant yang dipaginasi
     public function render()
     {
         return view('livewire.applicants-menu', [
             'applicants' => Applicants::where('fullname', 'like', '%' . $this->search . '%')->paginate(5)
         ]);
-        
+
     }
 
     // Fungsi show untuk menampilkan detail applicant

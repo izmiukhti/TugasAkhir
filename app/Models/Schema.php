@@ -10,9 +10,7 @@ class Schema extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-    ];
+    protected $fillable = ['name'];
 
     public function opportunities(){
         return $this->hasMany(Opportunity::class);

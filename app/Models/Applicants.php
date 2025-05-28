@@ -12,6 +12,7 @@ class Applicants extends Model
 
 
     protected $table = 'applicant';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'id',                    // Sesuaikan dengan kolom primary key
@@ -32,7 +33,7 @@ class Applicants extends Model
         'graduate_year',         // Tahun lulus
         'information_from',      // Sumber informasi pekerjaan
         'portfolio_link',        // Link portofolio
-        'cv_file',               // File CV
+        'cv_file'                // File CV
     ];
 
     // Definisikan relasi dengan model lain
@@ -63,5 +64,30 @@ class Applicants extends Model
     public function graduateStatus()
 {
     return $this->belongsTo(GraduatedStatus::class, 'graduate_status');
+}
+
+public function cvScreening()
+{
+    return $this->hasOne(CvScreening::class, 'applicant_id');
+}
+
+public function psikotest()
+{
+    return $this->hasOne(Psikotest::class, 'applicant_id');
+}
+
+public function interviewHR()
+{
+    return $this->hasOne(InterviewHR::class, 'applicant_id');
+}
+
+public function interviewUser()
+{
+    return $this->hasOne(InterviewUser::class, 'applicant_id');
+}
+
+public function offering()
+{
+    return $this->hasOne(Offering::class, 'applicant_id');
 }
 }

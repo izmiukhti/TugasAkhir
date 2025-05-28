@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Category Management')
+@section('title', 'Applicant Management')
 
 @push('styles')
     @livewireStyles
