@@ -164,6 +164,8 @@
                                     <div class="mb-4">
                                         <p class="text-white">Curriculum Vitae</p>
                                         <input type="file" class="form-control border-0 py-3" name="cv_file">
+                                        <small class="text-muted">*Only PDF files are allowed for CV || Max :
+                                            2MB</small>
                                         @error('cv_file')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -173,7 +175,8 @@
                                         <select class="form-control border-0 py-3" name="gender_id">
                                             <option value="">Select Gender</option>
                                             @foreach ($genders as $gender)
-                                                <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                                <option value="{{ $gender->id }}">{{ $gender->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('gender_id')
@@ -200,7 +203,8 @@
                                         <select class="form-control border-0 py-3" name="religion_id">
                                             <option value="">Select Religion</option>
                                             @foreach ($religions as $religion)
-                                                <option value="{{ $religion->id }}">{{ $religion->name }}</option>
+                                                <option value="{{ $religion->id }}">{{ $religion->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('religion_id')
@@ -212,7 +216,8 @@
                                         <select class="form-control border-0 py-3" name="marital_id">
                                             <option value="">Select Status</option>
                                             @foreach ($maritalStatuses as $maritalStatus)
-                                                <option value="{{ $maritalStatus->id }}">{{ $maritalStatus->name }}
+                                                <option value="{{ $maritalStatus->id }}">
+                                                    {{ $maritalStatus->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -225,7 +230,8 @@
                                         <select class="form-control border-0 py-3" name="education_id">
                                             <option value="">Select Education</option>
                                             @foreach ($educations as $education)
-                                                <option value="{{ $education->id }}">{{ $education->name }}</option>
+                                                <option value="{{ $education->id }}">{{ $education->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('education_id')
@@ -260,7 +266,8 @@
                                         <select class="form-control border-0 py-3" name="graduate_status">
                                             <option value="">Select Graduate Status</option>
                                             @foreach ($graduate_status as $status)
-                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                                <option value="{{ $status->id }}">{{ $status->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('graduate_status')
