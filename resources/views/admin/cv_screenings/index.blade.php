@@ -308,3 +308,24 @@
         }
     </style>
 @endpush
+
+@push('scripts')
+    <script>
+        const searchInput = document.getElementById('search');
+        const searchForm = document.getElementById('searchForm');
+
+        searchInput.addEventListener('input', function() {
+            searchForm.submit(); // Submit form when input changes
+        });
+
+        window.onload = function() {
+            searchInput.focus(); // Fokus otomatis setelah reload
+        };
+    </script>
+    <script>
+        // Auto hide alert after 3 seconds
+        setTimeout(function() {
+            $(".alert").alert('close');
+        }, 3000); // 3000 ms = 1 detik
+    </script>
+@endpush
