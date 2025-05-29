@@ -234,3 +234,30 @@
         }
     </style>
 @endpush
+
+@push('scripts')
+    <script>
+        const searchInput = document.getElementById('search');
+        const searchForm = document.getElementById('searchForm');
+
+        // Submit realtime saat mengetik
+        searchInput.addEventListener('input', function() {
+            searchForm.submit();
+        });
+
+        // Auto-focus HANYA jika sudah ada pencarian sebelumnya
+        @if (!empty($search))
+            window.onload = function() {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            };
+        @endif
+    </script>
+
+    <script>
+        // Auto hide alert after 3 seconds
+        setTimeout(function() {
+            $(".alert").alert('close');
+        }, 3000);
+    </script>
+@endpush
