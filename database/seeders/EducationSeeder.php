@@ -14,9 +14,6 @@ class EducationSeeder extends Seeder
     public function run(): void
     {
         $educations = [
-            ['name' => 'Tidak Bersekolah'],
-            ['name' => 'SD'],
-            ['name' => 'SMP'],
             ['name' => 'SMA'],
             ['name' => 'D3'],
             ['name' => 'D4'],
