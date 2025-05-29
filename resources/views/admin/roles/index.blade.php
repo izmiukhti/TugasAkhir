@@ -13,7 +13,7 @@
                 <h2 class="section-title-text">Role Management</h2>
             </div>
             <p class="section-lead">
-                This section displays applicant tracking based on opportunities.
+                In this section you can manage system roles such as adding, changing, and deleting.
             </p>
         </div>
         @if (session('success'))

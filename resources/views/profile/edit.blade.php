@@ -14,7 +14,7 @@
                 <h2 class="section-title-text">Profile Information</h2>
             </div>
             <p class="section-lead">
-                In this section you can manage system cv data such as editing profile.
+                In this section you can manage system data such as editing profile.
             </p>
         </div>
 

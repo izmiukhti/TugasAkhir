@@ -13,7 +13,7 @@
                 <h2 class="section-title-text">Permission Management</h2>
             </div>
             <p class="section-lead">
-                This section allows you to manage permissions and their associated roles.
+                In this section you can manage system permissions such as adding, changing, and deleting.
             </p>
         </div>
         @if (session('success'))

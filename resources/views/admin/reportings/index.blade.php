@@ -13,7 +13,7 @@
                 <h2 class="section-title-text">Applicant Report</h2>
             </div>
             <p class="section-lead">
-                This section displays applicant tracking based on opportunities.
+                In this section displays applicant tracking based on opportunities.
             </p>
         </div>
 
