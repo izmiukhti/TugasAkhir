@@ -97,6 +97,19 @@
                     </button>
                 </div>
             @endif
+
+            {{-- VALIDATION ERRORS GLOBAL --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>There were some problems with your input:</strong>
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="mx-auto pb-5 wow fadeIn" data-wow-delay=".3s">
                 <div class="alert alert-warning" role="alert">
                     Kegiatan ini tidak dipungut biaya apapun! Untuk mendaftar posisi silahkan melengkapi form berikut
