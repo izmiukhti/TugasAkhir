@@ -80,11 +80,21 @@
                 <h5 class="text-primary">Detail Opportunity</h5>
                 <h1>{{ $opportunity->name }}</h1>
             </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible show fade">
-                    <div class="alert-body">
-                        {{ session('success') }}
-                    </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             @endif
             <div class="mx-auto pb-5 wow fadeIn" data-wow-delay=".3s">

@@ -109,7 +109,7 @@ $cvPath = $cvFile->storeAs(
     }
         catch (\Exception $e) {
             Log::error('Gagal kirim email: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Data berhasil disimpan, tapi gagal mengirim email.');
+            return redirect()->back()->with('error', 'Data saved successfully, but failed to go to email. Please try again!');
     }
 }
 
