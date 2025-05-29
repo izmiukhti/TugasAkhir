@@ -164,8 +164,7 @@
                                     <div class="mb-4">
                                         <p class="text-white">Curriculum Vitae</p>
                                         <input type="file" class="form-control border-0 py-3" name="cv_file">
-                                        <small class="text-muted">*Only PDF files are allowed for CV || Max :
-                                            2MB</small>
+                                        <small class="text-muted">*Only PDF files || Max : 2MB</small>
                                         @error('cv_file')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
