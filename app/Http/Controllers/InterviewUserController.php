@@ -19,14 +19,10 @@ class InterviewUserController extends Controller
     {
         $search = $request->input('search');
 
-        $applicants = Applicants::with(['opportunity', 'interviewHr'])
-            ->whereHas('interviewHr', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->get();
+        $applicants = Applicants::with(['opportunity', 'interviewHr', 'interviewUser.staff'])
+            ->whereHas('interviewHr', fn($q) => $q->whereIn('decision_id', [2, 3]))
+            ->when($search, fn($q, $search) => $q->where('fullname', 'like', '%' . $search . '%'))
+            ->paginate(10);
 
         // Buat data InterviewUser otomatis jika belum ada
         foreach ($applicants as $applicant) {
@@ -39,20 +35,11 @@ class InterviewUserController extends Controller
                     'event_date' => now(), // Menambahkan nilai untuk event_date
                     'location' => '-',
                     'notifacation_sent' => false,
+                    'info_sent' => false,
                     'staff_id' => Auth::id()
                 ]
             );
         }
-
-        // Ambil data applicant dengan paginasi setelah data InterviewUser dibuat
-        $applicants = Applicants::with(['opportunity', 'interviewHr', 'interviewUser.staff'])
-            ->whereHas('interviewHr', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->paginate(10);
 
         return view('admin.interview_user.index', compact('applicants', 'search'));
     }
@@ -78,11 +65,11 @@ class InterviewUserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'score' => 'required|numeric',
+            'score' => 'required|numeric|min:1|max:100',
             'decision_id' => 'required|exists:decisions,id',
-            'notes' => 'nullable|string',
-            'event_date' => 'nullable|date',
-            'location' => 'nullable|string'
+            'notes' => 'required|string|min:5|max:1000',
+            'event_date' => 'required|date',
+            'location' => 'required|string'
         ]);
 
         // Cek nilai default
