@@ -15,14 +15,10 @@ class OfferingController extends Controller
     {
         $search = $request->input('search');
 
-        $applicants = Applicants::with(['opportunity', 'interviewUser'])
-            ->whereHas('interviewUser', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->get();
+        $applicants = Applicants::with(['opportunity', 'interviewUser', 'offering.staff'])
+            ->whereHas('interviewUser', fn($q) => $q->whereIn('decision_id', [2, 3]))
+            ->when($search, fn($q, $search) => $q->where('fullname', 'like', '%' . $search . '%'))
+            ->paginate(10);
 
         // Buat data Offering otomatis jika belum ada
         foreach ($applicants as $applicant) {
@@ -32,20 +28,11 @@ class OfferingController extends Controller
                     'benefit' => '-',
                     'selection_result' => '-',
                     'deadline_offering' => now()->toDateString(),
-                    'offering_result' => '-'
+                    'offering_result' => '-',
+                    'staff_id' => Auth::id()
                 ]
             );
         }
-
-        // Ambil data applicant dengan paginasi setelah data Offering dibuat
-        $applicants = Applicants::with(['opportunity', 'interviewUser', 'Offering.staff'])
-            ->whereHas('interviewUser', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->paginate(10);
 
         return view('admin.offerings.index', compact('applicants', 'search'));
     }
@@ -69,10 +56,10 @@ class OfferingController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'benefit' => 'nullable|string',
-            'selection_result' => 'nullable|string',
-            'deadline_offering' => 'nullable|date',
-            'offering_result' => 'nullable|string'
+            'benefit' => 'required|string',
+            'selection_result' => 'required|string',
+            'deadline_offering' => 'required|date',
+            'offering_result' => 'required|string'
 
         ]);
 
