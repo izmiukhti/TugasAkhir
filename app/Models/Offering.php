@@ -12,24 +12,18 @@ class Offering extends Model
 
     protected $table = 'offerings';
     protected $fillable = [
-        'name',
         'applicant_id',
-        'decision_id',
         'benefit',
         'selection_result',
         'deadline_offering',
         'offering_result',
-        'notification_sent'
+        'notification_sent',
+        'staff_id'
     ];
 
     public function applicant()
     {
         return $this->belongsTo(Applicants::class, 'applicant_id');
-    }
-
-    public function decision()
-    {
-        return $this->belongsTo(Decision::class);
     }
 
     public function staff()

@@ -10,12 +10,13 @@ class Psikotest extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'applicant_id',
         'decision_id',
         'score',
         'notes',
-        'notification_sent'
+        'notification_sent',
+        'info_sent',
+        'staff_id'
     ];
     public function decision(){
         return $this->belongsTo(Decision::class);

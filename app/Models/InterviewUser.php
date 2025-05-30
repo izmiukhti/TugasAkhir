@@ -11,15 +11,15 @@ class InterviewUser extends Model
 
     protected $table = 'interview_user';
     protected $fillable = [
-        'name',
         'applicant_id',
         'decision_id',
         'event_date',
         'location',
         'score',
         'notes',
-        'notification_sent'
-
+        'notification_sent',
+        'info_sent',
+        'staff_id'
     ];
 
     public function applicant()
