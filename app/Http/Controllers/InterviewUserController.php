@@ -34,7 +34,7 @@ class InterviewUserController extends Controller
                     'notes' => '-',
                     'event_date' => now(), // Menambahkan nilai untuk event_date
                     'location' => '-',
-                    'notifacation_sent' => false,
+                    'notification_sent' => false,
                     'info_sent' => false,
                     'staff_id' => Auth::id()
                 ]

@@ -59,8 +59,7 @@ class OfferingController extends Controller
             'benefit' => 'required|string',
             'selection_result' => 'required|string',
             'deadline_offering' => 'required|date',
-            'offering_result' => 'required|string'
-
+            'offering_result' => 'required|string',
         ]);
 
         // Cek nilai default
@@ -88,14 +87,21 @@ class OfferingController extends Controller
 
     public function sendNotification($id)
     {
-        $applicant = Applicants::with('Offering')->findOrFail($id);
-        $Offering = $applicant->Offering;
+        $applicant = Applicants::with('offering')->findOrFail($id);
+        $offering = $applicant->offering;
 
-        // Anggap semua data offering valid, maka dianggap "lolos"
-        $result = 'lolos';
+        // Cek kalau sudah dikirim, tolak pengiriman ulang
+        if ($offering->notification_sent) {
+            return redirect()->back()->with('error', 'Notification has already been sent.');
+        }
 
-        Mail::to($applicant->email)->send(new OfferingResultMail($applicant, $Offering));
+        Mail::to($applicant->email)->send(new OfferingResultMail($applicant, $offering));
+
+        // Tandai sudah dikirim
+        $offering->notification_sent = true;
+        $offering->save();
 
         return redirect()->back()->with('success', 'Notification sent successfully.');
-    }
+}
+
 }
