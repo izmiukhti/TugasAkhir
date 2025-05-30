@@ -11,7 +11,6 @@ class Reporting extends Model
 
     protected $table = 'reportings';
     protected $fillable = [
-        'name',
         'applicant_id',
         'decision_id'
     ];
