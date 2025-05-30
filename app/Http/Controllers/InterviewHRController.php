@@ -21,14 +21,11 @@ class InterviewHRController extends Controller
     {
         $search = $request->input('search');
 
-        $applicants = Applicants::with(['opportunity', 'psikotest'])
-            ->whereHas('psikotest', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->get();
+        $applicants = Applicants::with(['opportunity', 'psikotest', 'interviewHR.staff'])
+            ->whereHas('psikotest', fn($q) => $q->whereIn('decision_id', [2, 3]))
+            ->when($search, fn($q, $search) => $q->where('fullname', 'like', '%' . $search . '%'))
+            ->paginate(10);
+
 
         // dd('applicants');
 
@@ -47,16 +44,6 @@ class InterviewHRController extends Controller
                 ]
             );
         }
-
-        // Ambil data applicant dengan paginasi setelah data InterviewHR dibuat
-        $applicants = Applicants::with(['opportunity', 'psikotest', 'interviewHR.staff'])
-            ->whereHas('psikotest', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->paginate(10);
 
         return view('admin.interview_hr.index', compact('applicants', 'search'));
     }
@@ -81,11 +68,11 @@ class InterviewHRController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'score' => 'required|numeric',
+            'score' => 'required|numeric|min:1|max:100',
             'decision_id' => 'required|exists:decisions,id',
-            'notes' => 'nullable|string',
-            'event_date' => 'nullable|date',
-            'location' => 'nullable|string'
+            'notes' => 'required|string|min:5|max:1000',
+            'event_date' => 'required|date',
+            'location' => 'required|string'
         ]);
 
         // Cek nilai default
