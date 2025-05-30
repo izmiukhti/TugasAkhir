@@ -22,7 +22,7 @@ class CvScreeningController extends Controller
     {
         $search = $request->input('search');
 
-        $cvScreening = CvScreening::all();
+        // $cvScreening = CvScreening::all();
 
         $applicants = Applicants::with(['opportunity', 'cvScreening.decision', 'cvScreening.staff'])
             ->when($search, function ($query, $search) {
@@ -35,8 +35,8 @@ class CvScreeningController extends Controller
 
     public function show($id)
     {
-        $cvScreening = CvScreening::where('applicant_id', $id)->first();
-        $applicant = Applicants::findOrFail($id);
+        $applicant = Applicants::with('cvScreening')->findOrFail($id);
+        $cvScreening = $applicant->cvScreening;
 
         session()->flash('info', 'Viewing CV Screening details.');
 
@@ -46,7 +46,7 @@ class CvScreeningController extends Controller
     public function edit($id)
     {
         $applicant = Applicants::with('cvScreening')->findOrFail($id);
-        $cvScreening = CvScreening::where('applicant_id', $id)->first();
+        // $cvScreening = CvScreening::where('applicant_id', $id)->first();
         $decisions = Decision::all();
 
         session()->flash('info', 'Edit the CV Screening information.');
@@ -57,9 +57,9 @@ class CvScreeningController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'score' => 'required|numeric',
+            'score' => 'required|numeric|min:1|max:100',
             'decision_id' => 'required|exists:decisions,id',
-            'notes' => 'nullable|string',
+            'notes' => 'required|string|min:5|max:1000'
         ]);
 
         // Validasi nilai default
