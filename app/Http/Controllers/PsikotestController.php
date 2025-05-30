@@ -22,14 +22,10 @@ class PsikotestController extends Controller
     {
         $search = $request->input('search');
 
-        $applicants = Applicants::with(['opportunity', 'cvScreening'])
-            ->whereHas('cvScreening', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->get();
+        $applicants = Applicants::with(['opportunity', 'cvScreening', 'psikotest.staff'])
+            ->whereHas('cvScreening', fn($q) => $q->whereIn('decision_id', [2, 3]))
+            ->when($search, fn($q, $search) => $q->where('fullname', 'like', '%' . $search . '%'))
+            ->paginate(10);
 
         // Buat data psikotest otomatis jika belum ada
         foreach ($applicants as $applicant) {
@@ -40,20 +36,11 @@ class PsikotestController extends Controller
                 'decision_id' => 1, // Default decision_id
                 'notes' => '-',
                 'notification_sent' => false,
+                'info_sent' => false,
                 'staff_id' => Auth::id()
                 ]
             );
         }
-
-        // Ambil data applicant dengan paginasi setelah data psikotest dibuat
-        $applicants = Applicants::with(['opportunity', 'cvScreening', 'psikotest.staff'])
-            ->whereHas('cvScreening', function ($query) {
-                $query->whereIn('decision_id', [2, 3]);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('fullname', 'like', '%' . $search . '%');
-            })
-            ->paginate(10);
 
         return view('admin.psikotests.index', compact('applicants', 'search'));
     }
