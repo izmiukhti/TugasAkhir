@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\PsikotestCustomInfoMail;
 use App\Mail\PsikotestResultMail;
 use App\Models\Applicants;
-use App\Models\CvScreening;
 use App\Models\Decision;
 use App\Models\InterviewHR;
 use App\Models\InterviewUser;
@@ -80,9 +79,9 @@ class PsikotestController extends Controller
     {
         // Validating the request data
         $request->validate([
-            'score' => 'required|numeric',
+            'score' => 'required|numeric|min:1|max:100',
             'decision_id' => 'required|exists:decisions,id',
-            'notes' => 'nullable|string',
+            'notes' => 'required|string|min:5|max:1000'
         ]);
 
         // Cek nilai default
