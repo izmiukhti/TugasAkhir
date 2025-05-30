@@ -40,6 +40,7 @@ class InterviewHRController extends Controller
                     'event_date' => now(), // Menambahkan nilai untuk event_date
                     'location' => '-',
                     'notification_sent' => false,
+                    'info_sent' => false,
                     'staff_id' => Auth::id()
                 ]
             );
