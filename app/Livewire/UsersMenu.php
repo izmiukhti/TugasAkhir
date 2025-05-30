@@ -48,6 +48,7 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->roles_id = $user->roles_id;
         $this->password = $user->password;
         $this->phone_number = $user->phone_number;
 
@@ -63,6 +64,7 @@ class UsersMenu extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->roles_id = $user->roles_id;
         $this->phone_number = $user->phone_number;
 
     }
