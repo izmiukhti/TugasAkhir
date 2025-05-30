@@ -46,7 +46,7 @@ class CvScreeningController extends Controller
     public function edit($id)
     {
         $applicant = Applicants::with('cvScreening')->findOrFail($id);
-        // $cvScreening = CvScreening::where('applicant_id', $id)->first();
+        $cvScreening = CvScreening::where('applicant_id', $id)->first();
         $decisions = Decision::all();
 
         session()->flash('info', 'Edit the CV Screening information.');
