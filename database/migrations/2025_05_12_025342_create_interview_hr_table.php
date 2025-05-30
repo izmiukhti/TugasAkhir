@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->dateTime('event_date');
             $table->string('location');
-            $table->string('score');
-            $table->string('notes');
+            $table->integer('score')->default(0);
+            $table->string('notes')->default('-');
             $table->boolean('notification_sent')->default(false);
             $table->boolean('info_sent')->default(false);
             $table->timestamps();

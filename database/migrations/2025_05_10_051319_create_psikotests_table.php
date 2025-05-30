@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('applicant_id');
             $table->unsignedBigInteger('decision_id');
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->string('score');
-            $table->string('notes');
+            $table->integer('score')->default(0);
+            $table->string('notes')->default('-');
             $table->boolean('notification_sent')->default(false);
             $table->boolean('info_sent')->default(false);
             $table->timestamps();
