@@ -92,12 +92,12 @@
                                                     {{-- Jika notifikasi sudah dikirim dan info tambahan belum dikirim --}}
                                                     <a href="{{ route('admin.cv_screenings.customEmailForm', $applicant->id) }}"
                                                         class="btn btn-sm btn-warning">
-                                                        Kirim Info Lanjutan
+                                                        Send Advance Information
                                                     </a>
                                                 @else
                                                     {{-- Info sudah dikirim, tampilkan tombol disabled --}}
                                                     <button class="btn btn-sm btn-secondary" disabled>
-                                                        Info Telah Dikirim
+                                                        Information has been sent
                                                     </button>
                                                 @endif
                                             @else
