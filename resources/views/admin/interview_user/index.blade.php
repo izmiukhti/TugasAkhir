@@ -92,12 +92,12 @@
                                                     {{-- Jika notifikasi sudah dikirim dan info tambahan belum dikirim --}}
                                                     <a href="{{ route('admin.interview_user.customEmailForm', $applicant->id) }}"
                                                         class="btn btn-sm btn-warning">
-                                                        Kirim Info Lanjutan
+                                                        Send Advance Information
                                                     </a>
                                                 @else
                                                     {{-- Info sudah dikirim, tombol dinonaktifkan --}}
                                                     <button class="btn btn-sm btn-secondary" disabled>
-                                                        Info Telah Dikirim
+                                                        Information has been sent
                                                     </button>
                                                 @endif
                                             @else

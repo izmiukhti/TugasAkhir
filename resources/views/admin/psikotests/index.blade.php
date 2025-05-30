@@ -92,13 +92,13 @@
                                                     {{-- Jika notifikasi sudah dikirim dan info tambahan belum dikirim --}}
                                                     <a href="{{ route('admin.psikotests.customEmailForm', $applicant->id) }}"
                                                         class="btn btn-sm btn-warning">
-                                                        Kirim Info Lanjutan
+                                                        Send Advance Information
                                                     </a>
                                                 @else
                                                     {{-- Jika info sudah dikirim --}}
                                                     <button class="btn btn-sm btn-secondary" disabled
                                                         title="Info sudah pernah dikirim">
-                                                        Info Telah Dikirim
+                                                        Information has been sent
                                                     </button>
                                                 @endif
                                             @else
