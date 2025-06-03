@@ -121,8 +121,8 @@ class CvScreeningController extends Controller
         }
 
         // Validasi skor dan catatan untuk keputusan "Disarankan", "Netral", dan "Tidak Disarankan"
-        $score = trim($cvScreening->score);
-        $notes = trim($cvScreening->notes);
+        // $score = trim($cvScreening->score);
+        // $notes = trim($cvScreening->notes);
 
         // --- Tentukan string hasil untuk email ---
         $emailResultString = '';
