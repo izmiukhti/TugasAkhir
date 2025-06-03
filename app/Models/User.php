@@ -34,7 +34,7 @@ class User extends Authenticatable
     }
 
     // Relasi ke Role (Many to Many)
-    public function roles()
+    public function role()
     {
         return $this->belongsTo(Role::class, 'roles_id', 'id');
     }
