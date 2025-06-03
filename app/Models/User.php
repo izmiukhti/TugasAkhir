@@ -42,9 +42,19 @@ class User extends Authenticatable
     // Relasi ke Permission melalui Role
     public function permissions()
     {
-        return $this->roles()->with('permissions')->get()
-            ->pluck('permissions')
-            ->flatten()
-            ->unique('id');
+        $data = $this->roles()               // ambil roles milik user
+            ->with('permissions')            // sertakan permissions
+            ->get()
+            ->pluck('permissions')           // ambil permissions-nya
+            ->flatten()                      // ubah jadi satu array datar
+            ->unique('id')                   // hapus duplikat berdasarkan ID
+            ->values();                      // reset index agar rapi
+
+        return $data;
+    }
+
+    public function hasPermission($id)
+    {
+        return $this->roles_id == 1 || $this->permissions()->pluck('id')->contains($id);
     }
 }
