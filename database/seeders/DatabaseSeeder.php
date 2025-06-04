@@ -21,16 +21,16 @@ class DatabaseSeeder extends Seeder
         Role::insert([
             [
                 'name' => 'SuperAdmin',
-                'description' => 'Have full access to all system features and management, including users, roles, access rights, and recruitment data.'
+                'description' => 'Full access to system features including user, role, permission, and recruitment management.',
             ],
             [
                 'name' => 'Admin',
-                'description' => 'Have access to manage recruitment-related data such as divisions, categories, vacancies, and applicants.'
+                'description' => 'Manage recruitment data: divisions, categories, opportunities, applicants, and reports.',
             ],
             [
                 'name' => 'Staff',
-                'description' => 'Can perform applicant assessment process (CV Screening, Psychotest, Interview) and view relevant data.'
-            ],
+                'description' => 'Handle applicant assessments (CV Screening, Psychotest, Interview) and view related data.'
+            ]
         ]);
 
         User::insert([

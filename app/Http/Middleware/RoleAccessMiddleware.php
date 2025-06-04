@@ -18,20 +18,25 @@ class RoleAccessMiddleware
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next, ...$allowedRoleIds): Response
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    if (!$user || !$user->roles_id) {
-        abort(403, 'Access denied');
-    }
+        if (!$user || !$user->roles_id) {
+            abort(403, 'Access denied');
+        }
+        $permissionIds = $user->permissions()
+            ->pluck('id')->toArray();
+        // Bandingkan roles_id
+        if ($user->roles_id == 1) {
+            return $next($request);
+        }
+        for ($i = 0; $i < count($permissionIds); $i++) {
+            # code...
+            if (in_array($permissionIds[$i], $allowedRoleIds)) {
+                return $next($request);
+            }
+        }
 
-    // Bandingkan roles_id
-    if (!in_array($user->roles_id, $allowedRoleIds)) {
         abort(403, 'Unauthorized access.');
     }
-
-    return $next($request);
-}
-
-
 }
