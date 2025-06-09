@@ -42,7 +42,7 @@ class User extends Authenticatable
     // Relasi ke Permission melalui Role
     public function permissions()
     {
-        $data = $this->roles()               // ambil roles milik user
+        $data = $this->role()               // ambil roles milik user
             ->with('permissions')            // sertakan permissions
             ->get()
             ->pluck('permissions')           // ambil permissions-nya
