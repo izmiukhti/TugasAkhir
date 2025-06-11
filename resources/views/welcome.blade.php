@@ -487,7 +487,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    form.classList.add('d-none');
                     found = true;
                 }
             });
@@ -497,7 +496,6 @@
             }
         });
     </script>
-
 
 
     <!-- Template Javascript -->
