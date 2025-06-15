@@ -30,9 +30,9 @@
                         <div class="login-brand">
                             <img src="{{ asset('assets/img/vertical-logo.png') }}" alt="logo" width="150">
                         </div>
-                        @if ($errors->has('email'))
+                        @if (session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ $errors->first('email') }}
+                                {{ session('error') }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
