@@ -142,7 +142,6 @@
             color: #868e96;
             margin-bottom: 0;
             margin-left: calc(28px + 0.5rem);
-            /* Margin kiri sebesar lebar toggle + jaraknya */
         }
 
         /* Wrapper untuk pagination Laravel bawaan */
