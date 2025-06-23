@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <form action="{{ route('simpanDt', ['id' => $opportunity->id]) }}" method="POST"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" novalidate>
                             @csrf
                             <p><strong>Applicant Form</strong></p>
                             <div class="wow fadeIn" data-wow-delay=".3s">
@@ -154,7 +154,8 @@
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-white">Email Address</p>
-                                        <input type="email" class="form-control border-0 py-3" name="email">
+                                        <input type="email" class="form-control border-0 py-3" name="email"
+                                            autocomplete="off">
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
