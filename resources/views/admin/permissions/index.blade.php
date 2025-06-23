@@ -86,7 +86,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Delete this permission?')">
+                                        class="d-inline" onsubmit="return confirm('Are you sure?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-icon btn-danger">
