@@ -81,20 +81,16 @@
                 <h1>{{ $opportunity->name }}</h1>
             </div>
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div id="alert-success" class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
@@ -400,6 +396,23 @@
 
         <!-- Template Javascript -->
         <script src="../js/main.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const autoClose = (id) => {
+                    const alertEl = document.getElementById(id);
+                    if (alertEl) {
+                        setTimeout(() => {
+                            alertEl.classList.remove('show'); // hilangin class 'show' (trigger fade)
+                            setTimeout(() => alertEl.remove(), 300); // hapus dari DOM setelah fade
+                        }, 3000);
+                    }
+                };
+
+                autoClose('alert-success');
+                autoClose('alert-error');
+            });
+        </script>
 </body>
 
 </html>
