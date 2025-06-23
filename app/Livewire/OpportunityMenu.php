@@ -18,7 +18,7 @@ class OpportunityMenu extends Component
 
     public $applicants;
     public $selectedApplicant = null;
-    
+
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
 
@@ -41,36 +41,36 @@ class OpportunityMenu extends Component
     public $location;
     public $open_date;
     public $close_date;
-    
+
     // Update form
     public $update_name;
     public $update_description;
     public $update_job_description;
     public $update_job_requirement;
-    
+
     public $opportunity;
     public $schemas;
     public $categories;
     public $divisions;
     public $id;
-    
+
 
     public function render()
     {
-        
+
         // Mengambil data applicants dan mengurutkannya berdasarkan id secara ascending
         $opportunities = Opportunity::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('created_at', 'DESC')
             ->paginate(6);
         $applicants = Applicants::orderBy('id', 'ASC')->get(); // Urutkan berdasarkan id secara ascending
-    
+
         return view('livewire.opportunity-menu', [
             'opportunities' => $opportunities,
             'applicants' => $applicants,
         ]);
     }
-    
-    
+
+
 
 
     public function home(){
@@ -87,22 +87,22 @@ class OpportunityMenu extends Component
     {
         // Ambil kesempatan berdasarkan ID
         $this->opportunity = Opportunity::find($id);
-    
+
         // Ambil applicants yang sesuai dengan id_opportunity
         $this->applicants = Applicants::where('id_opportunity', $id)->get();
-    
+
         // Atur status tampilan
         $this->isHome = false;
         $this->isDetail = true;
         $this->isCreate = false;
         $this->isInformation = false;
         $this->isUpdate = false;
-    
+
         // Debug output untuk memeriksa applicants
-    
+
         // Debug output untuk memeriksa applicants
     }
-    
+
 
     public function create()
     {
@@ -119,9 +119,9 @@ class OpportunityMenu extends Component
 
     public function store()
     {
-        
+
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|unique:opportunities',
             'description' => 'required',
             'job_description' => 'required',
             'job_requirement' => 'required',
@@ -189,17 +189,17 @@ class OpportunityMenu extends Component
     $this->isUpdate = true;
 }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         $opportunity = Opportunity::find($id);
-    
+
         if ($opportunity) {
             $opportunity->delete(); // Soft delete
             session()->flash('success', 'Opportunity deleted successfully.');
         } else {
             session()->flash('error', 'Opportunity not found.');
         }
-    
+
         $this->home();
     }
     public function mount()

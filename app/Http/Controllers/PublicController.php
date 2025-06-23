@@ -45,7 +45,7 @@ public function store(Request $request, $id)
         'gpa' => 'nullable|numeric|max:5 ',
         'graduate_status' => 'required|string',
         'graduate_year' => 'required|integer',
-        'information_from' => 'nullable|string',
+        'information_from' => 'nullable|string'
     ]);
 
 // Simpan file CV dan dapatkan path
