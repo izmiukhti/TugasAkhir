@@ -46,96 +46,104 @@
                         </form>
                     </div>
                 </div>
+                <div class="table-responsive">
 
-                <table class="table table-striped" id="table1">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Opportunity</th>
-                            <th>Action</th>
-                            <th>Decision</th>
-                            <th>Notification</th>
-                            <th>Staff</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($applicants as $index => $applicant)
+                    <table class="table table-striped" id="table1">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $applicant->fullname }}</td>
-                                <td>{{ $applicant->opportunity->name ?? '-' }}</td>
-                                <td>
-                                    <a href="{{ route('admin.cv_screenings.show', $applicant->id) }}"
-                                        class="btn btn-icon btn-primary">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.cv_screenings.edit', $applicant->id) }}"
-                                        class="btn btn-icon btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <span class="badge bg-secondary text-dark">
-                                        {{ $applicant->cvScreening->decision->name ?? '-' }}
-                                    </span>
-                                </td>
-                                <td>
-                                    @php
-                                        $cv = $applicant->CvScreening;
-                                    @endphp
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Opportunity</th>
+                                <th>Action</th>
+                                <th>Decision</th>
+                                <th>Notification</th>
+                                <th>Staff</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($applicants as $index => $applicant)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $applicant->fullname }}</td>
+                                    <td>{{ $applicant->opportunity->name ?? '-' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.cv_screenings.show', $applicant->id) }}"
+                                            class="btn btn-icon btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('admin.cv_screenings.edit', $applicant->id) }}"
+                                            class="btn btn-icon btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary text-dark">
+                                            {{ $applicant->cvScreening->decision->name ?? '-' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @php
+                                            $cv = $applicant->CvScreening;
+                                        @endphp
 
-                                    @if ($cv && $cv->decision_id != 1)
-                                        @if (in_array($cv->decision_id, [2, 3]))
-                                            @if ($cv->notification_sent)
-                                                @if (!$cv->info_sent)
-                                                    {{-- Jika notifikasi sudah dikirim dan info tambahan belum dikirim --}}
-                                                    <a href="{{ route('admin.cv_screenings.customEmailForm', $applicant->id) }}"
-                                                        class="btn btn-sm btn-warning">
-                                                        Send Advance Information
-                                                    </a>
+                                        @if ($cv && $cv->decision_id != 1)
+                                            @if (in_array($cv->decision_id, [2, 3]))
+                                                @if ($cv->notification_sent)
+                                                    @if (!$cv->info_sent)
+                                                        {{-- Jika notifikasi sudah dikirim dan info tambahan belum dikirim --}}
+                                                        <a href="{{ route('admin.cv_screenings.customEmailForm', $applicant->id) }}"
+                                                            class="btn btn-sm btn-warning">
+                                                            Send Advance Information
+                                                        </a>
+                                                    @else
+                                                        {{-- Info sudah dikirim, tampilkan tombol disabled --}}
+                                                        <button class="btn btn-sm btn-secondary" disabled>
+                                                            Information has been sent
+                                                        </button>
+                                                    @endif
                                                 @else
-                                                    {{-- Info sudah dikirim, tampilkan tombol disabled --}}
+                                                    {{-- Notifikasi belum dikirim --}}
+                                                    <form
+                                                        action="{{ route('admin.cv_screenings.sendNotification', $applicant->id) }}"
+                                                        method="POST" style="display:inline-block;"
+                                                        onsubmit="return confirm('Kirim notifikasi untuk {{ $applicant->fullname }}?');">
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-success mb-1" type="submit">
+                                                            Send Notification
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @elseif ($cv && $cv->decision_id == 4)
+                                                @if ($cv->notification_sent)
                                                     <button class="btn btn-sm btn-secondary" disabled>
                                                         Information has been sent
                                                     </button>
+                                                @else
+                                                    <form
+                                                        action="{{ route('admin.cv_screenings.sendNotification', $applicant->id) }}"
+                                                        method="POST" style="display:inline-block;"
+                                                        onsubmit="return confirm('Kirim notifikasi untuk {{ $applicant->fullname }}?');">
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-danger mb-1" type="submit">
+                                                            Send Notification
+                                                        </button>
+                                                    </form>
                                                 @endif
-                                            @else
-                                                {{-- Notifikasi belum dikirim --}}
-                                                <form
-                                                    action="{{ route('admin.cv_screenings.sendNotification', $applicant->id) }}"
-                                                    method="POST" style="display:inline-block;"
-                                                    onsubmit="return confirm('Kirim notifikasi untuk {{ $applicant->fullname }}?');">
-                                                    @csrf
-                                                    <button class="btn btn-sm btn-success mb-1" type="submit">
-                                                        Send Notification
-                                                    </button>
-                                                </form>
                                             @endif
-                                        @elseif ($cv->decision_id == 4)
-                                            {{-- Untuk decision gagal (id 4), selalu tampilkan Send Notification --}}
-                                            <form
-                                                action="{{ route('admin.cv_screenings.sendNotification', $applicant->id) }}"
-                                                method="POST" style="display:inline-block;"
-                                                onsubmit="return confirm('Kirim notifikasi untuk {{ $applicant->fullname }}?');">
-                                                @csrf
-                                                <button class="btn btn-sm btn-danger mb-1" type="submit">
-                                                    Send Notification
-                                                </button>
-                                            </form>
+                                        @else
+                                            <span class="text-muted">-</span>
                                         @endif
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
+                                    </td>
 
-                                <td>
-                                    {{ $applicant->cvScreening?->staff?->name ?? '-' }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                    <td>
+                                        {{ $applicant->cvScreening?->staff?->name ?? '-' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
                 {{-- Pagination --}}
                 <div class="custom-pagination-wrapper">
                     {{ $applicants->links() }}

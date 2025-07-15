@@ -48,7 +48,7 @@
                                         <div class="buttons">
                                             <a href="#" wire:click.prevent="show('{{ $applicant->id }}')"
                                                 class="btn btn-icon btn-primary"><i class="fas fa-eye"></i></a>
-                                            <a href="#" wire:click.prevent="destroy({{ $applicant->id }})"
+                                            <a href="#" wire:click.prevent="destroy('{{ $applicant->id }}')"
                                                 wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i
                                                     class="fas fa-times"></i></a>
                                         </div>

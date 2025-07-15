@@ -37,7 +37,7 @@
             </div>
             <div class="row">
                 @foreach ($opportunities as $item)
-                    <div class="col-4">
+                    <div class="col-12 col-md-4 mb-4">
                         <div class="card card-info">
                             <div class="card-header">
                                 <h4>{{ $item->name }}</h4>
@@ -87,34 +87,34 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
                             <h3>{{ $opportunity->name }}</h3>
                             <p>{{ $opportunity->location }}, {{ $opportunity->schema->name }} | Created Date :
                                 {{ $opportunity->created_at }} <br> Division : {{ $opportunity->division->name }} |
                                 Category : {{ $opportunity->category->name }} <br>Open Date :
                                 {{ $opportunity->start_date }} | Close Date : {{ $opportunity->end_date }}</p>
                         </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3 text-center">
+                        <div class="col-12 col-md-6">
+                            <div class="row g-2">
+                                <div class="col-6 col-lg-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Click</strong></p>
                                         <h4>{{ $opportunity->clicked }}</h4>
                                     </div>
                                 </div>
-                                <div class="col-3 text-center">
+                                <div class="col-6 col-lg-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Applicant</strong></p>
                                         <h4>{{ $opportunity->applicants->count() }}</h4>
                                     </div>
                                 </div>
-                                <div class="col-3 text-center">
+                                <div class="col-6 col-lg-3 text-center">
                                     <div class="alert alert-light">
                                         <p><strong>Jumlah Quota</strong></p>
                                         <h4>{{ $opportunity->quota }}</h4>
                                     </div>
                                 </div>
-                                <div class="col-3 text-center">
+                                <div class="col-6 col-lg-3 d-grid">
                                     <a href="#" wire:click.prevent="home()"
                                         class="btn btn-sm btn-block btn-outline-primary icon-left"><i
                                             class="fas fa-arrow-left"></i> Back</a>
