@@ -80,13 +80,13 @@ class CategoryMenu extends Component
         $this->home();
     }
     public function destroy($id) {
-        $user = Category::find($id);
+        $category = Category::find($id);
 
-        if ($user) {
-            $user->forceDelete();
-            session()->flash('success', 'Category deleted permanently.');
-        }else{
-            $this->back();
+        if ($category) {
+            $category->delete(); // Ini akan soft delete
+            session()->flash('success', 'Category deleted successfully.');
+        } else {
+            session()->flash('error', 'Category not found.');
         }
     }
 }
