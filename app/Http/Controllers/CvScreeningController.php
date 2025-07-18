@@ -142,6 +142,7 @@ class CvScreeningController extends Controller
             Mail::to($applicant->email)->send(new CvScreeningResultMail($applicant, $emailResultString));
 
             $cvScreening->notification_sent = true;
+            $cvScreening->info_sent = false;
             $cvScreening->save();
 
             return redirect()->back()->with('success', 'Notification sent successfully.');
@@ -173,6 +174,15 @@ class CvScreeningController extends Controller
 
         $applicant = Applicants::findOrFail($id);
         $cvScreening = $applicant->cvScreening;
+
+        // Hanya bisa kirim advance info setelah notifikasi dikirim
+        if (!$cvScreening->notification_sent) {
+            return redirect()->back()->with('error', 'Please send the initial notification first.');
+        }
+
+        if ($cvScreening->info_sent) {
+            return redirect()->back()->with('error', 'Advance info has already been sent.');
+        }
 
         try {
             Mail::to($applicant->email)->send(new CvScreeningCustomInfoMail($applicant, $request->message));

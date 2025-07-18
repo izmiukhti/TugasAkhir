@@ -149,6 +149,7 @@ class PsikotestController extends Controller
 
             // Tandai notifikasi sudah terkirim
             $psikotest->notification_sent = true;
+            $psikotest->info_sent = false;
             $psikotest->save();
 
             return redirect()->back()->with('success', 'Notification sent successfully.');
@@ -180,6 +181,15 @@ class PsikotestController extends Controller
 
     $applicant = Applicants::findOrFail($id);
     $psikotest = $applicant->psikotest;
+
+    // Hanya bisa kirim advance info setelah notifikasi dikirim
+    if (!$psikotest->notification_sent) {
+        return redirect()->back()->with('error', 'Please send the initial notification first.');
+    }
+
+    if ($psikotest->info_sent) {
+        return redirect()->back()->with('error', 'Advance info has already been sent.');
+    }
 
     try {
         Mail::to($applicant->email)->send(new PsikotestCustomInfoMail($applicant, $request->message));
