@@ -84,7 +84,7 @@ class CategoryMenu extends Component
 
         if ($user) {
             $user->forceDelete();
-            session()->flash('success', 'User deleted permanently.');
+            session()->flash('success', 'Category deleted permanently.');
         }else{
             $this->back();
         }
