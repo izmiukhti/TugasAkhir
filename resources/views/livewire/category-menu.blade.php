@@ -13,7 +13,6 @@
                     <div class="row">
                         <div class="col-4">
 
-
                         </div>
                         <div class="col-4">
                             <input wire:model.live.debounce.250ms="search" type="text" class="form-control"
@@ -53,8 +52,9 @@
                                     <td>
                                         <div class="buttons">
                                             <a href="#" wire:click.prevent="update({{ $category->id }})"
-                                                class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
-                                            <a href="#" wire:click.prevent="delete({{ $category->id }})"
+                                                class="btn btn-icon btn-warning"><i
+                                                    class="fas fa-exclamation-triangle"></i></a>
+                                            <a href="#" wire:click="destroy({{ $category->id }})"
                                                 wire:confirm="Are you sure?" class="btn btn-icon btn-danger"><i
                                                     class="fas fa-times"></i></a>
                                         </div>
@@ -98,7 +98,6 @@
                             <button class="submit btn btn-success">Save</button>
                         </div>
 
-
                     </div>
                 </form>
             </div>
@@ -111,7 +110,7 @@
 
         <div class="section-body">
             <h2 class="section-title">Update Category</h2>
-            <p class="section-lead">In this section you can update new category to access the system.</p>
+            <p class="section-lead">In this section you can update the category details.</p>
             <div class="card">
                 <form wire:submit.prevent="setUpdate({{ $id }})">
                     <div class="card-body">
@@ -133,10 +132,12 @@
                             <a href="#" wire:click="home()" class="btn btn-primary">Back</a>
                             <button class="submit btn btn-success">Save</button>
                         </div>
-
                     </div>
                 </form>
             </div>
         </div>
     @endif
+
+</div>
+
 </div>

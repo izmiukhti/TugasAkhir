@@ -11,7 +11,7 @@ class CategoryMenu extends Component
 {
     use WithPagination, WithoutUrlPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $isHome = true;
     public $isCreate = false;
     public $isUpdate = false;
@@ -79,20 +79,14 @@ class CategoryMenu extends Component
         $this->reset('name', 'description');
         $this->home();
     }
+    public function destroy($id) {
+        $user = Category::find($id);
 
-    public function destroy($id)
-    {
-        $division = Category::find($id);
-        
-        if ($division) {
-            if ($division->opportunities()->count() > 0) { 
-                session()->flash('error', 'Category cannot be deleted ');
-            } else {
-                $division->delete();
-                session()->flash('success', 'Category deleted successfully.');
-            }
-        } else {
-            session()->flash('error', 'Category not found.');
+        if ($user) {
+            $user->forceDelete();
+            session()->flash('success', 'User deleted permanently.');
+        }else{
+            $this->back();
         }
     }
 }
